@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Sports Sheduler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <%- include('header.ejs') %>
+            <b class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-1 "><a href="/sport">Go Back</a></b>
+            <b class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-1 "><a href="/signout">Signout</a></b>
+            <h2 class="mt-7"><b>Create a New Sport:</b></h2>
+            <form action="/sport" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="flex gap-2 py-4">
+                    <div class="flex-auto">
+                        <input required type="text" name="title" placeholder="Name of a Sport"
+                            class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm " />
+                    </div>
+                    <div class="flex-none">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">Add</button>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <h2  style="color: blue" class="mt-3"><b>List of Created Sports:</b></h2>
+                <%if(allSportsPart.length!=0){%>
+                    <table>
+                        <% for(var i=0; i< allSportsPart.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= allSportsPart[i].title %>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </table>
+                <%}else{%>
+                    <p>No sport created</p>
+                <%}%>
+                
+            </div>
+        </div>
+    </div>
+</body>
