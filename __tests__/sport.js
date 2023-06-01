@@ -38,9 +38,9 @@ describe("Sport Application", function () {
     const csrfToken = extractCsrfToken(res);
     res = await agent.post("/users").send({
       firstName: "Test",
-      lastName: "UserA",
+      lastName: "User A",
       email: "user.a@test.com",
-      password: "12345",
+      password: "12345678",
       _csrf: csrfToken,
     });
     expect(res.statusCode).toBe(302);
@@ -57,12 +57,12 @@ describe("Sport Application", function () {
 
   test("Creates a sport", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     const csrfToken = extractCsrfToken(res);
     const response = await agent.post("/sport").send({
-      title: "football",
+      title: "cricket",
       _csrf: csrfToken,
     });
     expect(response.statusCode).toBe(302);
@@ -70,12 +70,12 @@ describe("Sport Application", function () {
 
   test("Deletes a sport", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Badminton",
       _csrf: csrfToken,
     });
     const groupedTodosResponse1 = await agent
@@ -95,14 +95,14 @@ describe("Sport Application", function () {
     expect(parseRes).toBe(true);
   });
 
-  test("Edit Sport", async () => {
+  test("Edit a Sport", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Badminton",
       _csrf: csrfToken,
     });
     const groupedTodosResponse1 = await agent
@@ -115,7 +115,7 @@ describe("Sport Application", function () {
     res = await agent.get(`/sport/edit/${latestSport.id}`);
     csrfToken = extractCsrfToken(res);
     res = await agent.post(`/sport/${latestSport.id}`).send({
-      title: "badminton2",
+      title: "Badminton2",
       _csrf: csrfToken,
     });
     const groupedTodosResponse = await agent
@@ -123,18 +123,18 @@ describe("Sport Application", function () {
       .set("Accept", "application/json");
     parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
     const Title = parsedGroupedResponse.sport.title;
-    expect(Title).toBe("badminton2");
+    expect(Title).toBe("Badminton2");
   });
 
   test("Fetches all Sports in the database using /sport endpoint", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     // expect(res.statusCode).toBe(200)
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "tennis",
+      title: "Tennis",
       _csrf: csrfToken,
     });
     const groupedTodosResponse1 = await agent
@@ -147,7 +147,7 @@ describe("Sport Application", function () {
     res = await agent.get("/createSport");
     csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "badminton",
+      title: "Badminton",
       _csrf: csrfToken,
     });
     const groupedTodosResponse = await agent
@@ -157,17 +157,17 @@ describe("Sport Application", function () {
     const NoOfSports1 = parsedGroupedResponse.allSports.length;
     const latestSport = parsedGroupedResponse.allSports[NoOfSports1 - 1];
     expect(NoOfSports1).toBe(NoOfSports + 1);
-    expect(latestSport.title).toBe("badminton");
+    expect(latestSport.title).toBe("Badminton");
   });
 
   test("Creates a Session", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Cricket",
       _csrf: csrfToken,
     });
     const groupedTodosResponse1 = await agent
@@ -180,11 +180,11 @@ describe("Sport Application", function () {
     res = await agent.get(`/sport/sessions/${latestSport.id}`);
     csrfToken = extractCsrfToken(res);
     res = await agent.post(`/createSession/${latestSport.id}`).send({
-      sessionName: "Cricket Session 1",
+      sessionName: "Cricket Session #1",
       date: new Date().toISOString(),
       time: "15:41:00",
       venue: "Hyderabad",
-      names: "Rohan,Das",
+      names: "Sneha,Ankith",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -193,12 +193,12 @@ describe("Sport Application", function () {
 
   test("Fetches all Pariticular sport Sessions created by user ", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "football",
+      title: "Cricket",
       _csrf: csrfToken,
     });
     let groupedTodosResponse1 = await agent
@@ -211,11 +211,11 @@ describe("Sport Application", function () {
     res = await agent.get(`/sport/sessions/${latestSport.id}`);
     csrfToken = extractCsrfToken(res);
     res = await agent.post(`/createSession/${latestSport.id}`).send({
-      sessionName: "Cricket Session 1",
+      sessionName: "Cricket Session #1",
       date: new Date().toISOString(),
       time: "15:41:00",
       venue: "Hyderabad",
-      names: "Rohan,Das",
+      names: "Sneha,Ankith",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -229,11 +229,11 @@ describe("Sport Application", function () {
     res = await agent.get(`/sport/sessions/${latestSport.id}`);
     csrfToken = extractCsrfToken(res);
     res = await agent.post(`/createSession/${latestSport.id}`).send({
-      sessionName: "Cricket Session 2",
+      sessionName: "Cricket Session #2",
       date: new Date().toISOString(),
       time: "17:41:00",
       venue: "Hyderabad",
-      names: "Sneha,Rohan",
+      names: "Sneha,Priya",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -247,12 +247,12 @@ describe("Sport Application", function () {
 
   test("Fetches all upcoming Sessions of a particular sport", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Cricket",
       _csrf: csrfToken,
     });
     let groupedTodosResponse1 = await agent
@@ -266,11 +266,11 @@ describe("Sport Application", function () {
     csrfToken = extractCsrfToken(res);
     const dateToday = new Date();
     res = await agent.post(`/createSession/${latestSport.id}`).send({
-      sessionName: "Cricket Session 1",
+      sessionName: "Cricket Session #1",
       date: new Date(new Date().setDate(dateToday.getDate() + 1)).toISOString(),
       time: "15:41:00",
       venue: "Hyderabad",
-      names: "Rohan,Das",
+      names: "Sneha,Ankith",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -279,15 +279,16 @@ describe("Sport Application", function () {
       .set("Accept", "application/json");
     parsedGroupedResponse = JSON.parse(groupedTodosResponse1.text);
     const NoOfSportSessions = parsedGroupedResponse.allUpcoming.length;
+
     res = await agent.get(`/sport/${latestSport.id}`);
     res = await agent.get(`/sport/sessions/${latestSport.id}`);
     csrfToken = extractCsrfToken(res);
     res = await agent.post(`/createSession/${latestSport.id}`).send({
-      sessionName: "Cricket Session 2",
+      sessionName: "Cricket Session #2",
       date: new Date(new Date().setDate(dateToday.getDate() + 1)).toISOString(),
       time: "17:41:00",
       venue: "Hyderabad",
-      names: "Sneha,Rohan",
+      names: "Sneha,Priya",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -298,14 +299,15 @@ describe("Sport Application", function () {
     const NoOfSportSessions2 = parsedGroupedResponse.allUpcoming.length;
     expect(NoOfSportSessions2).toBe(NoOfSportSessions + 1);
   });
+
   test("Fetches all previous Sessions of a particular sport", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Cricket",
       _csrf: csrfToken,
     });
     let groupedTodosResponse1 = await agent
@@ -323,7 +325,7 @@ describe("Sport Application", function () {
       date: new Date(new Date().setDate(dateToday.getDate() - 1)).toISOString(),
       time: "15:41:00",
       venue: "Hyderabad",
-      names: "Rohan,Das",
+      names: "Sneha,Ankith",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -341,7 +343,7 @@ describe("Sport Application", function () {
       date: new Date(new Date().setDate(dateToday.getDate() - 1)).toISOString(),
       time: "17:41:00",
       venue: "Hyderabad",
-      names: "Sneha,Rohan",
+      names: "Sneha,Priya",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
@@ -355,12 +357,12 @@ describe("Sport Application", function () {
 
   test("Deleting Player in the particular session", async () => {
     const agent = request.agent(server);
-    await login(agent, "user.a@test.com", "12345");
+    await login(agent, "user.a@test.com", "12345678");
     let res = await agent.get("/sport");
     res = await agent.get("/createSport");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/sport").send({
-      title: "cricket",
+      title: "Cricket",
       _csrf: csrfToken,
     });
     let groupedTodosResponse1 = await agent
@@ -378,7 +380,7 @@ describe("Sport Application", function () {
       date: new Date(new Date().setDate(dateToday.getDate() + 1)).toISOString(),
       time: "15:41:00",
       venue: "Hyderabad",
-      names: "Rohan,Das",
+      names: "Sneha,Ankith",
       playersNeeded: 2,
       _csrf: csrfToken,
     });
