@@ -1,34 +1,53 @@
 "use strict";
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.addColumn("Sports", "userId", {
-      type: Sequelize.DataTypes.INTEGER,
-    });
-    await queryInterface.addConstraint("Sports", {
-      fields: ["userId"],
-      type: "foreign key",
-      references: {
-        table: "Users",
-        field: "id",
-      },
-    });
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+  up: async (queryInterface, Sequelize) => {
+    const tableName = "Sports";
+    const columnName = "userId";
+    const constraintName = `${tableName}_${columnName}_fkey`;
+
+    const transaction = await queryInterface.sequelize.transaction();
+
+    try {
+      // Check if the column already exists
+      const table = await queryInterface.describeTable(tableName, { transaction });
+
+      if (!table[columnName]) {
+        // Add the column
+        await queryInterface.addColumn(tableName, columnName, {
+          type: Sequelize.DataTypes.INTEGER,
+        }, { transaction });
+
+        // Create the foreign key constraint
+        await queryInterface.addConstraint(tableName, {
+          fields: [columnName],
+          type: "foreign key",
+          references: {
+            table: "Users",
+            field: "id",
+          },
+          name: constraintName,
+          onDelete: "CASCADE",
+          onUpdate: "CASCADE",
+          transaction,
+        });
+      }
+
+      // Commit the transaction
+      await transaction.commit();
+    } catch (error) {
+      // Rollback the transaction in case of error
+      await transaction.rollback();
+      throw error;
+    }
   },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn("Sports", "userId");
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+  down: async (queryInterface) => {
+    const tableName = "Sports";
+    const columnName = "userId";
+    const constraintName = `${tableName}_${columnName}_fkey`;
+
+    await queryInterface.removeConstraint(tableName, constraintName);
+    await queryInterface.removeColumn(tableName, columnName);
   },
 };
