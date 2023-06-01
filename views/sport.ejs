@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Sports Sheduler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color:	#00ffff;
+    }
+
+    .flex-container>div {
+        display: inline-block;
+        background-color: 	#ffffe0;
+        margin: 10px;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+    }
+</style>
+</head>
+
+<body>
+    <div class="grid grid-cols-6">
+        <div class="col-start-3 col-span-2">
+            <%- include('header.ejs') %>
+            <b class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-1 "><a href="/signout">Signout</a></b>
+            <% if (role === 'admin'){%>
+                <h2  style="color: blue" class="mt-3"><b>Administrative functions:</b></h2>
+                <div >
+                    <a href="createSport" class="hover:bg-purple-200 text-sky-600"><u>Create a Sport</u> </a><br>
+                <a href="viewReports" class="hover:bg-purple-200 text-sky-600"><u>View Reports </u></a>
+                </div>
+           <% }%>
+
+           <h3 style="color: blue" class="mt-3"><b>You have the following upcoming sessions:</b></h3>
+           <%- include('homeSessions.ejs') %>
+
+            <h3 style="color: blue" class="mt-3"><b>List Of Available Sports</b></h3>
+            <div class="btn-group-vertical m-3">
+                <%if(allSports.length!=0){%>
+                    <% for(var i=0; i< allSports.length; i++) { %>
+                        <button type="text" style="background-color:#00ffff" class="btn btn-info "><a href="sport/<%=allSports[i].id%> "><%= allSports[i].title %></a></button>
+                    <% } %>
+                <%}else{%>
+                    <p>There are no available sports</p> 
+               <% }%>
+                
+              </div>
+                
+        </div>
+    </div>
+
+</body>
+
+</html>
