@@ -1,0 +1,39 @@
+<div class="flex-container">
+    <%function formatTime(timeString) {%>
+        <%const [hourString, minute] = timeString.split(":");%>
+        <%const hour = +hourString % 24;%>
+        <%return (hour % 12 || 12) + ":" + minute + (hour < 12 ? "AM" : "PM");%>
+    <%}%>
+    <%if (allUpcoming.length!=0){%>
+        <% for(var i=0; i< allUpcoming.length; i++) { %>
+            <%if (!allUpcoming[i].canceled){%>
+                <div class="font-medium rounded px-2 py-1">
+                    <a href="sport/partSession/<%=allUpcoming[i].id%>">
+                    <p><%=allUpcoming[i].sessionName%></p>
+                    <p style="display: inline;"><%=(new Date(allUpcoming[i].date)).toDateString() %></p>
+                    <p style="display: inline;"><%=formatTime(allUpcoming[i].time)%></p>
+                <%if (allUpcoming[i].playersNeeded === 0){%>
+                    <p style="color:red; display: inline;">Fully Booked</p>
+                <%}else{%>
+                    <p style="display: inline;"><%=allUpcoming[i].playersNeeded %> slots</p>
+                <%}%>
+                </a>
+                </div>
+            <%}else{%>
+                <div class="font-medium rounded px-2 py-1">
+                    <p><%=allUpcoming[i].sessionName%></p>
+                    <p style="display: inline;"><%=(new Date(allUpcoming[i].date)).toDateString() %></p>
+                    <p style="display: inline;"><%=formatTime(allUpcoming[i].time)%></p>
+                <%if (allUpcoming[i].playersNeeded === 0){%>
+                    <p style="color:red; display: inline;">Fully Booked</p>
+                <%}else{%>
+                    <p style="display: inline;"><%=allUpcoming[i].playersNeeded %> slots</p>
+                <%}%>
+                <p style="color:red;"><b>Canceled due to <%=allUpcoming[i].message%></b></p>
+                </div>
+            <%}%>
+            <% } %>
+    <%}else{%>
+        <p>You have no upcoming sessions available</p>
+    <%}%>
+</div>
