@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+        function deleteSportSession(id) {
+            fetch(`/sessionCreate/${id}`,
+                {
+                    method: "delete",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "_csrf": token
+                    })
+                })
+                .then((res) => {
+                    if (res.ok) {
+                        window.location.reload();
+                    }
+                })
+                .catch((err) => console.error(err));
+        }
+    </script>
+    <title>Sport list</title>
+    <style>
+        /* Global Styles */
+        body {
+          background-color: #fafafa;
+          font-family: 'Arial', sans-serif;
+          color: #333;
+          line-height: 1.5;
+        }
+    
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 1rem;
+        }
+    
+        h1,
+        h2,
+        h3 {
+          margin: 0;
+        }
+    
+        /* Header Styles */
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #333;
+          padding: 1rem;
+          color: #fff;
+        }
+    
+        .header h1 {
+          font-size: 2rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+        }
+    
+        .header a {
+          color: #fff;
+          text-decoration: none;
+          font-size: 1.2rem;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          background-color: #4caf50;
+          transition: all 0.2s ease-in-out;
+        }
+    
+        .header a:hover {
+          background-color: #357a38;
+        }
+    
+        /* Sport Session Styles */
+        .SessionName {
+          margin-top: 2rem;
+        }
+    
+        .SessionName h1 {
+          font-size: 2rem;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+        }
+    
+        form {
+          margin: 2rem auto;
+          max-width: 600px;
+          background-color: #fff;
+          padding: 2rem;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        input[type="date"],
+        input[type="time"],
+        input[type="text"],
+        input[type="number"] {
+          display: block;
+          margin: 1rem 0;
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 1rem;
+        }
+    
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+        }
+    
+        button[type="submit"] {
+          display: block;
+          margin: 2rem auto 0;
+          padding: 0.5rem 1rem;
+          border: none;
+          border-radius: 5px;
+          background-color: #4caf50;
+          color: #fff;
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+        }
+    
+        button[type="submit"]:hover {
+          background-color: #357a38;
+        }
+    
+        /* Footer Styles */
+        .footer {
+          text-align: center;
+          padding: 1rem;
+          background-color: #333;
+          color: #fff;
+        }
+    
+        .position {
+    
+          position: absolute;
+          top: 0px;
+          right: 0px;
+        }
+    
+    
+        .container {
+          max-width: 1200px;
+          width: 100%;
+          margin: auto;
+          position: relative;
+        }
+    
+        .text-black {
+          color: #000000;
+        }
+    
+        .font-bold {
+          font-weight: bold;
+        }
+    
+        .px-6 {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+    
+        .py-9 {
+          padding-top: 2.25rem;
+          padding-bottom: 2.25rem;
+        }
+    
+        .bg-gray-300 {
+          background-color: #D1D5DB;
+        }
+    
+        .rounded-md {
+          border-radius: 0.375rem;
+        }
+    
+        .shadow-2xl {
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+    
+        a {
+          color: #000000;
+          text-decoration: none;
+          font-weight: bold;
+        }
+    
+        a:hover {
+          color: #000000;
+          text-decoration: underline;
+        }
+    
+        @media only screen and (max-width: 600px) {
+          .position {
+            padding: 10px;
+          }
+    
+          .px-6 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+    
+          .py-9 {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+          }
+        }
+      </style>
+</head>
+
+<body>
+  <% if(messages && messages.success && messages.success.length > 0)  { %>
+    <% for(var i=0; i<messages.success.length; i++) { %>
+      <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
+    <% } %>
+  <% } %>
+  <% if(messages && messages.error && messages.error.length> 0) { %>
+    <% for(var i=0; i<messages.error.length; i++) { %>
+        <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+            <%= messages.error[i] %>
+        </p>
+        <% } %>
+            <% } %>
+    <%- include('header.ejs',{data:userName}) %>
+
+        </div>
+        <div class="SessionName">
+            <h1 class="mx-14 py-4 text-3xl font-semibold">New <%= sportDetail.SportName %> Session</h1>
+        </div>
+        <div>
+            <div class="h-full max-h-full flex flex-col items-center justify-center content-center p-20 ">
+                <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
+                    <form action="/sessionCreate/<%= sportDetail.id %>/<%= sportDetail.userId %>/<%= sportDetail.SportName %>" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                        <div class="mb-5 flex flex-row space-x-28 items-center">
+                            <label for="date">Date =></label>
+                            <input type="date" name="date"
+                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
+                                required>
+                        </div>
+                        <div class="mb-5 flex flex-row space-x-28 items-center">
+                            <label for="time">Time =></label>
+                            <input type="time" name="time"
+                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
+                                required>
+                        </div>
+                        <div class="mb-5 flex flex-row space-x-28 items-center">
+                            <label for="place">Place =></label>
+                            <input type="text" name="place" placeholder="What's the place of sport?"
+                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
+                                required>
+                        </div>
+                        <div class="mb-5 flex flex-row space-x-28 items-center">
+                            <label for="player">Player =></label>
+                            <input type="text" name="player" placeholder="What's the name of players?(comma saperated)"
+                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
+                                required>
+                        </div>
+                        <div class="mb-5 flex flex-row space-x-28 items-center">
+                            <label for="TotalPlayer">Total Player =></label>
+                            <input type="number" name="TotalPlayer" placeholder="What's the total of player?"
+                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
+                                required>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="bg-green-600 px-5 py-1.5 mr-2 font-medium text-white rounded">Add</button>
+                        </div>
+                </div>
+                </form>
+                <div class="position">
+                    <div class="container">
+                      <div class="text-black flex-row font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
+                        <a href="/sportDetail/<%= sportDetail.id %>" class="absolute">>View Sessions</a><br>
+                        <br><a href="/SportList" class="absolute">>Home</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            
+                            <div class="col-start-3 col-span-2">
+                                <%- include('footer.ejs') %>
+                            </div>
+        </div>
+        </div>
+</body>
+
+</html>
