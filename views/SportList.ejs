@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<%= csrfToken %>">
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            background:linear-gradient(to right, #8debff, #6cacff) ; /* Set your desired background color */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem; /* Set the desired gap between buttons */
+            margin-top: 1rem; /* Set the desired top margin */
+        }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         var token = document
@@ -27,8 +40,8 @@
             })
             .catch((err) => console.error(err));
         }
-        </script>
-    <title>Sport list</title>
+    </script>
+    <title>RAY SPORTS-SCHEDULER</title>
 </head>
 <body>
     <div>
@@ -47,8 +60,10 @@
                         <% } %>
                             <% } %>
                 <%- include('header.ejs',{data:userName}) %>
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="/signout">Signout</a></button><br>
-                <button class="bg-yellow-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"><a href="/resetPassword/<%=userId%>">Reset Password</a></button>
+                <div class="button-container">
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="/signout">SIGNOUT</a></button>
+                    <button class="bg-yellow-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"><a href="/resetPassword/<%=userId%>">RESET PASSWORD</a></button>
+                </div>
                 <%- include('sportListBase.ejs',{title:"Sport List Information",data:sportListInfo}) %>
             </div>
             <div>
@@ -69,6 +84,6 @@ spid.forEach(element =>     {
     })
    });
 </script>
-    
-
 </body>
+</html>
+
