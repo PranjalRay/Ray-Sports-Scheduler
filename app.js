@@ -181,6 +181,7 @@ app.get(
           sportListInfo,
           userName,
           userId,
+          rowsOfPlayerJoinedId,
           csrfToken: request.csrfToken(),
         });
       } else {
