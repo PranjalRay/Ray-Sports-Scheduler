@@ -2,98 +2,101 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Sport Scheduler</title>
-    <style>
-        body {
-            background: linear-gradient(to right, #8debff, #6cacff);
-            font-family: Arial, 'Times New Roman', Times, serif;
-            padding: 20px;
-            margin: 0;
-            background-image: url('https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=1060&t=st=1683305327~exp=1683305927~hmac=bc0e1b5a54a70dba9bd4af27f67c3cb3245e98d43ddb1f3f168e792336d6c0ce');
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= csrfToken %>">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Sport Scheduler</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #8debff, #6cacff);
+      font-family: Arial, 'Times New Roman', Times, serif;
+      padding: 20px;
+      margin: 0;
+      background-image: url('https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=1060&t=st=1683305327~exp=1683305927~hmac=bc0e1b5a54a70dba9bd4af27f67c3cb3245e98d43ddb1f3f168e792336d6c0ce');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
 
-        p {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: justify;
-            color: rgb(15, 15, 15);
+    p {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: justify;
+      color: rgb(15, 15, 15);
+    }
 
-        }
+    form {
+      background-color: rgb(255, 255, 255);
+      border-radius: 40px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 400px;
+    }
 
-        form {
-            background-color: rgb(255, 255, 255);
-            border-radius: 40px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            max-width: 400px;
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      justify-content: center;
+      align-items: center;
+    }
 
+    .flex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        }
+    .note {
+      font-size: 120%;
+      color: green;
+    }
 
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flex {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .note {
-            font-size: 120%;
-            color: green;
-        }
-
-        .A {
-            position: absolute;
-            border: 0;
-            background-color: #000000d5;
-            color: #f8f8f8;
-            padding: 16px 26px;
-            border-radius: 40px;
-            display: inline-block;
-            size: 10px;
-            top: 36%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
+    .A {
+      position: absolute;
+      border: 0;
+      background-color: #000000d5;
+      color: #f8f8f8;
+      padding: 16px 26px;
+      border-radius: 40px;
+      display: inline-block;
+      size: 10px;
+      top: 36%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 
 <body>
-    <div>
-        <h1>
-            <p class="A">Welcome to Rank's Sports Scheduler</p>
-        </h1>
-        <div class="container">
-            <form>
-                <div class="flex">
-                    <p>Admin</p>
-                    <button><a href="/admin" class="note">Click here</a></button>
-                    <p>Player</p>
-                    <button><a href="/player" class="note">Click here</a></button>
-                </div>
-
-            </form>
+  <div>
+    <h1>
+      <p class="A">Welcome to Ray Sports-Scheduler App</p>
+    </h1>
+    <div class="container">
+      <form>
+        <div class="flex">
+          <p><span class="glyphicon glyphicon-user"></span> Admin</p>
+          <a href="/admin" class="note">
+            <button type="button">Click here to sign-in as admin</button>
+          </a>
+          <p><span class="glyphicon glyphicon-user"></span> Player</p>
+          <a href="/player" class="note">
+            <button type="button">Click here to sign-up or sign-in as player</button>
+          </a>
         </div>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
