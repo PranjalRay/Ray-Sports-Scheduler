@@ -17,99 +17,119 @@
       font-family: Arial, 'Times New Roman', Times, serif;
       padding: 20px;
       margin: 0;
-      background-image: url('https://clipartix.com/wp-content/uploads/2016/04/Clip-art-sports-cmshrimp.jpeg');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    p {
-      font-size: 24px;
-      font-weight: bold;
-      text-align: justify;
-      color: rgb(15, 15, 15);
-    }
-
-    form {
-      background-color: rgb(255, 255, 255);
-      border-radius: 40px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      max-width: 400px;
     }
 
     .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
+      display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
-    .flex {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .note {
-      font-size: 120%;
-      color: green;
-    }
-
-    .A {
-      position: absolute;
-      border: 0;
-      background-color: #000000d5;
-      color: #f8f8f8;
-      padding: 16px 26px;
+    .box {
+      background-image: url(https://th.bing.com/th/id/OIP.Hd69LCQqsixT1ptZhMW-RAHaE-?pid=ImgDet&rs=1);
       border-radius: 40px;
-      display: inline-block;
-      size: 10px;
-      top: 36%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      padding: 40px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      max-width: 750px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .form-label {
       color: #555;
       margin-bottom: 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color:azure;
+      margin-top: 20px;
+      position: relative;
+      cursor: default;
+    }
+
+    .form-label:hover::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -20px;
+      transform: translateX(-50%);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #ff5e3a;
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 20px;
+      color: aliceblue;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #ff5e3a;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 30px;
+    }
+
+    .fancy {
+      @supports (background-clip: text) or (-webkit-background-clip: text) {
+        background-image: url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+        background-size: 110% auto;
+        background-position: center;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-size: 40px;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+
+    .form-label:hover+.note .btn {
+      transform: translateY(10px);
+    }
+
+    .note .btn:hover {
+      background-color: #ff3e1a;
     }
   </style>
 </head>
 
 <body>
-  <div>
-    <h1>
-      <p class="A">Welcome to Ray Sports-Scheduler App</p>
-    </h1>
-    <div class="container">
-      <form>
-        <div class="flex">
-          <div class="input-group">
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-user"></span>
-            </span>
-            <p class="form-control-static form-label">Admin</p>
-          </div>
-          <a href="/admin" class="note">
-            <button type="button">Click here to sign-in as admin</button>
-          </a>
-          <div class="input-group">
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-user"></span>
-            </span>
-            <p class="form-control-static form-label">Player</p>
-          </div>
-          <a href="/player" class="note">
-            <button type="button">Click here to sign-up or sign-in as player</button>
+  <div class="container">
+    <div class="box">
+      <p><span class="fancy">Welcome to Ray's Sports-Scheduler</span></p>
+      <div>
+        <p class="form-label">Admin</p>
+        <div class="note">
+          <a href="/admin">
+            <button class="btn">Click here to sign-in as admin</button>
           </a>
         </div>
-      </form>
+        <p class="form-label">Player</p>
+        <div class="note">
+          <a href="/player">
+            <button class="btn">Click here to sign-up or sign-in as player</button>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </body>
