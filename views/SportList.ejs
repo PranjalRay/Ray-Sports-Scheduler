@@ -47,8 +47,8 @@
                         <% } %>
                             <% } %>
                 <%- include('header.ejs',{data:userName}) %>
-                <a href="/signout">Signout</a><br>
-                <a href="/resetPassword/<%=userId%>">Reset Password</a>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="/signout">Signout</a></button><br>
+                <button class="bg-yellow-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"><a href="/resetPassword/<%=userId%>">Reset Password</a></button>
                 <%- include('sportListBase.ejs',{title:"Sport List Information",data:sportListInfo}) %>
             </div>
             <div>
@@ -72,4 +72,3 @@ spid.forEach(element =>     {
     
 
 </body>
-</html>
