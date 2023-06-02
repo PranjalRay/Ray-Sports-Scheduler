@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="<%= csrfToken %>">
         <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
             body {
@@ -23,7 +24,7 @@
             }
     
             .col-start-3 {
-                background-color: rgba(255, 255, 255, 0.763);
+                background-image: url(https://th.bing.com/th/id/OIP.Hd69LCQqsixT1ptZhMW-RAHaE-?pid=ImgDet&rs=1);
                 border-radius: 20px;
                 padding: 20px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -40,7 +41,7 @@
             label {
                 display: block;
                 font-size: 20px;
-                color: #333;
+                color: white;
                 margin-bottom: 10px;
             }
     
@@ -54,6 +55,44 @@
                 font-size: 32px;
                 
             }
+            .fancy {
+                @supports (background-clip: text) or (-webkit-background-clip: text) {
+                    background-image: url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+                    background-size: 110% auto;
+                    background-position: center;
+                    color: transparent;
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    font-size: 36px;
+                    line-height: 1.2;
+                    text-align: center;
+                }
+            }
+            .form-label:hover+.note .btn {
+                    transform: translateY(10px);
+    }
+                .form-label {
+                color: #555;
+                margin-bottom: 0;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                color:azure;
+                margin-top: 20px;
+                position: relative;
+                cursor: default;
+                }
+
+                .form-label:hover::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -20px;
+                transform: translateX(-50%);
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #ff5e3a;
+                }
         </style>
     </head>
     <body>
@@ -71,18 +110,18 @@
                         </p>
                         <% } %>
                             <% } %>
-                <h6 class="py-4">Login to an account</h6>
+                            <p><span class="fancy">LOGIN TO AN ACCOUNT</span></p>
                 <form action="/session" method="post">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <div class="py-3">
-                        <label for="email">Email:</label>
+                        <label for="email" class="form-label">Email:</label>
                         <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your email">
                     </div>
                     <div class="py-3">
-                        <label for="password">Password:</label>
+                        <label for="password" class="form-label">Password:</label>
                         <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password">
                     </div>
-                    <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2">Sign in</button>
+                    <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i>  SIGN IN</button>
                     
                 </form>
                 
