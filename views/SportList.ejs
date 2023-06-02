@@ -9,14 +9,10 @@
     <style>
         body {
             background:linear-gradient(to right, #8debff, #6cacff) ; /* Set your desired background color */
-        }
-
-        .button-container {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1rem; /* Set the desired gap between buttons */
-            margin-top: 1rem; /* Set the desired top margin */
+            justify-content: center;
+            min-height: 100vh;
         }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,6 +40,7 @@
     <title>RAY SPORTS-SCHEDULER</title>
 </head>
 <body>
+    <div>
         <div class="grid grid-cols-6">
             <div class="col-start-3 col-span-2">
                 <% if(messages && messages.success && messages.success.length > 0)  { %>
@@ -60,25 +57,23 @@
                             <% } %>
                 <%- include('header.ejs',{data:userName}) %>
                 <br>
-                <div class="button-container">
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="/signout">SIGNOUT</a></button>
-                    <button class="bg-yellow-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"><a href="/resetPassword/<%=userId%>">RESET PASSWORD</a></button>
-                </div>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><a href="/signout">SIGNOUT</a></button>
+                <button class="bg-yellow-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"><a href="/resetPassword/<%=userId%>">RESET PASSWORD</a></button>
                 <%- include('sportListBase.ejs',{title:"Sport List Information",data:sportListInfo}) %>
             </div>
+        </div>
     </div>
-     <div>
-     <%- include('footer.ejs') %>
-     </div>
-<script>
-   let spid= document.querySelectorAll(".SportId")
-spid.forEach(element =>     {
-    element.addEventListener("click",(e)=>{
-        console.log(e.target.id);
-        window.location.href = `/sessionCreate/${e.target.id}/${e.target.userId}/${e.target.SportName}`
-    })
-   });
-</script>
+    <div>
+        <%- include('footer.ejs') %>
+    </div>
+    <script>
+        let spid= document.querySelectorAll(".SportId")
+        spid.forEach(element => {
+            element.addEventListener("click",(e)=>{
+                console.log(e.target.id);
+                window.location.href = `/sessionCreate/${e.target.id}/${e.target.userId}/${e.target.SportName}`
+            })
+        });
+    </script>
 </body>
 </html>
-
