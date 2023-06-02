@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sport Scheduler</title>
+</head>
+<body>
+    <div>
+        <div class="grid grid-cols-6">
+            <div class="col-start-3 col-span-2">
+                <p class="py-2">Welcome to Rank's Sports Scheduler</p>
+                <p class="py-2">Are you an account for Admin of a Sport?<a href="/login" class="text-green-600">Click here</a></p>
+                <p class="py-2">Are you a new as an Admin of a Sport?<a href="/signup" class="text-green-600">Click here</a></p>
+                <% if(messages && messages.error && messages.error.length > 0)  { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                      <p class="bg-red-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2"><%= messages.error[i] %></p>
+                    <% } %>
+                  <% } %>
+            </div>
+        </div>
+    </div>
+</body>
