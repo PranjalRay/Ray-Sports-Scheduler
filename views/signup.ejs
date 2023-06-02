@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="<%= csrfToken %>">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.tailwindcss.com"></script> 
+        <style>
+            body {
+                background: linear-gradient(to right, #add8e6, #9af19a);
+            }
+    
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                margin-top: 50px;
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 20px;
+            }
+    
+            .form-container {
+                grid-column: 3 / span 2;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+    
+            .form-container h6 {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 20px;
+            }
+    
+            .form-container label {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 10px;
+            }
+    
+            .form-container input[type=text],
+            .form-container input[type=email],
+            .form-container input[type=password] {
+                border: 1px solid #ccc;
+                color: #333;
+                border-radius: 5px;
+                padding: 10px;
+                width: 100%;
+                margin-bottom: 20px;
+                outline: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+    
+            .form-container input[type=submit] {
+                background-color: #4CAF50;
+                color: #fff;
+                font-size: 1.2rem;
+                font-weight: bold;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                cursor: pointer;
+            }
+    
+            .form-container input[type=submit]:hover {
+                background-color: #3e8e41;
+            }
+    
+            .error {
+                background-color: #f8d7da;
+                border: 1px solid #f5c2c7;
+                color: #721c24;
+                font-size: 1.2rem;
+                font-weight: bold;
+                border-radius: 5px;
+                padding: 10px;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid grid-cols-6">
+            <div class="col-start-3 col-span-2">
+              
+                <h6 class="py-4">Signup as a new user  </h6>
+                <form action="/users" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <div class="py-3">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" name="firstName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <div class="py-3">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" name="lastName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <div class="py-3">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <div class="py-3">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2">Sign up</button>
+                    <% if(messages && messages.error && messages.error.length > 0)  { %>
+                        <% for(var i=0; i<messages.error.length; i++) { %>
+                          <p class="bg-red-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2"><%= messages.error[i] %></p>
+                        <% } %>
+                      <% } %>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
