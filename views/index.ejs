@@ -10,7 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <title>Sport Scheduler</title>
+  <title>Ray Sports-Scheduler</title>
   <style>
     body {
       background: linear-gradient(to right, #8debff, #6cacff);
@@ -85,11 +85,21 @@
     <div class="container">
       <form>
         <div class="flex">
-          <p><span class="glyphicon glyphicon-user"></span> Admin</p>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-user"></span>
+            </span>
+            <p class="form-control-static">Admin</p>
+          </div>
           <a href="/admin" class="note">
             <button type="button">Click here to sign-in as admin</button>
           </a>
-          <p><span class="glyphicon glyphicon-user"></span> Player</p>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-globe"></span>
+            </span>
+            <p class="form-control-static">Player</p>
+          </div>
           <a href="/player" class="note">
             <button type="button">Click here to sign-up or sign-in as player</button>
           </a>
