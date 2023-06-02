@@ -40,7 +40,6 @@
     <title>RAY SPORTS-SCHEDULER</title>
 </head>
 <body>
-        <div class="grid grid-cols-6">
             <div class="col-start-3 col-span-2">
                 <% if(messages && messages.success && messages.success.length > 0)  { %>
                     <% for(var i=0; i<messages.success.length; i++) { %>
@@ -61,7 +60,6 @@
                 <%- include('sportListBase.ejs',{title:"Sport List Information",data:sportListInfo}) %>
                   <%- include('footer.ejs') %>
             </div>
-        </div>
     <script>
         let spid= document.querySelectorAll(".SportId")
         spid.forEach(element => {
