@@ -1,4 +1,8 @@
-body {
-  color: rgb(83, 80, 80);
-  font-family: Georgia, "Times New Roman", Times, serif;
+body{
+    font-family: sans-serif;
+    background-color: lightgrey;
+}
+
+.Todo-Item:hover .trash-icon{
+    display: block;
 }
