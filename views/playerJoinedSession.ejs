@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Sports Sessions</title>
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.7/dist/tailwind.min.css" />
+  <style>
+    /* Add some padding to the table cells */
+    td {
+      padding: 0.5rem;
+    }
+
+    /* Add some spacing between the table cells */
+    td:not(:last-child) {
+      border-right: 1px solid #ccc;
+    }
+
+    /* Add background colors to the table rows */
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #fff;
+    }
+
+    /* Add some hover effects */
+    tbody tr:hover {
+      background-color: #e6e6e6;
+    }
+
+    /* Add some styles for the table header */
+    th {
+      font-weight: bold;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      padding: 0.5rem;
+      border-bottom: 2px solid #ddd;
+    }
+
+    th:not(:last-child) {
+      border-right: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Sport Name</th>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Place</th>
+        <th>Time</th>
+        <th>Player</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i=0;i< rowsOfPlayerId.length;i++) { %>
+      <tr>
+        <td><%= rowsOfPlayerId[i].SportName %></td>
+        <td><%= rowsOfPlayerId[i].id %></td>
+        <td><%= rowsOfPlayerId[i].date %></td>
+        <td><%= rowsOfPlayerId[i].place %></td>
+        <td><%= rowsOfPlayerId[i].time %></td>
+        <td><%= rowsOfPlayerId[i].player %></td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+
+</html>
