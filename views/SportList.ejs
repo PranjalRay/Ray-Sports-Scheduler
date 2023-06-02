@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        var token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+        function deleteSport (id) {
+            fetch(`/createSport/${id}`,
+            {
+            method: "delete",
+            headers:{ "Content-Type" : "application/json" },
+            body: JSON.stringify({
+                "_csrf": token
+            })
+            })
+            .then((res) => {
+                if(res.ok){
+                    window.location.reload();
+                }
+            })
+            .catch((err) => console.error(err));
+        }
+        </script>
+    <title>Sport list</title>
+</head>
+<body>
+    <div>
+        <div class="grid grid-cols-6">
+            <div class="col-start-3 col-span-2">
+                <% if(messages && messages.success && messages.success.length > 0)  { %>
+                    <% for(var i=0; i<messages.success.length; i++) { %>
+                      <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
+                    <% } %>
+                  <% } %>
+                  <% if(messages && messages.error && messages.error.length> 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+                            <%= messages.error[i] %>
+                        </p>
+                        <% } %>
+                            <% } %>
+                <%- include('header.ejs',{data:userName}) %>
+                <a href="/signout">Signout</a><br>
+                <a href="/resetPassword/<%=userId%>">Reset Password</a>
+                <%- include('sportListBase.ejs',{title:"Sport List Information",data:sportListInfo}) %>
+            </div>
+            <div>
+            </div>
+            
+            <div class="col-start-3 col-span-2">
+                <%- include('footer.ejs') %>
+            </div>
+        </div>
+    </div>
+    
+<script>
+   let spid= document.querySelectorAll(".SportId")
+spid.forEach(element =>     {
+    element.addEventListener("click",(e)=>{
+        console.log(e.target.id);
+        window.location.href = `/sessionCreate/${e.target.id}/${e.target.userId}/${e.target.SportName}`
+    })
+   });
+</script>
+    
+
+</body>
+</html>
