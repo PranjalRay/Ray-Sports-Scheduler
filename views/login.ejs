@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="<%= csrfToken %>">
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body {
+    
+                background: linear-gradient(to bottom, #0c2340, #283747);
+                background-image: url('https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+                background-size: cover;
+                background-repeat: no-repeat;
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+    
+            }
+    
+            .col-start-3 {
+                background-color: rgba(255, 255, 255, 0.763);
+                border-radius: 20px;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                width: 500px;
+                max-width: 500px;
+                height: 400px;
+                text-align: center;
+            }
+    
+            form {
+                margin-top: 20px;
+            }
+    
+            label {
+                display: block;
+                font-size: 20px;
+                color: #333;
+                margin-bottom: 10px;
+            }
+    
+            button {
+                margin-top: 20px;
+            }
+    
+            .A {
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grid grid-cols-6">
+            <div class="col-start-3 col-span-2">
+                <% if(messages && messages.success && messages.success.length > 0)  { %>
+                    <% for(var i=0; i<messages.success.length; i++) { %>
+                      <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
+                    <% } %>
+                  <% } %>
+                  <% if(messages && messages.error && messages.error.length> 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+                            <%= messages.error[i] %>
+                        </p>
+                        <% } %>
+                            <% } %>
+                <h6 class="py-4">Login to an account</h6>
+                <form action="/session" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <div class="py-3">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <div class="py-3">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                    </div>
+                    <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2">Sign in</button>
+                    
+                </form>
+                
+            </div>
+        </div>
+    </body>
+</html>
