@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <title>Table</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+        }
+
+        section h2 {
+            margin-top: 0;
+        }
+
+        section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0077cc;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #005d99;
+        }
+
+        /* Todo List Styles */
+        .Todo-Item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trash-icon {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .joinedSession {
+            display: inline-block;
+            color: green;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .playerLeavedSession {
+            display: inline-block;
+            color: red;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .playerJoinedSession {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .bg-red-100 {
+            background-color: #FECACA;
+        }
+
+        .border-gray-300 {
+            border-color: #E5E7EB;
+        }
+
+        .p-2 {
+            padding: 0.5rem;
+        }
+
+        .font-medium {
+            font-weight: 500;
+        }
+
+        .rounded {
+            border-radius: 0.375rem;
+        }
+
+        .text-red-900 {
+            color: #7F1D1D;
+        }
+
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .bg-purple-50 {
+            background-color: #F5F3FF;
+        }
+
+        .hover\:bg-purple-50:hover {
+            background-color: #EDE9FE;
+        }
+
+        .w-fit {
+            display: inline-flex;
+        }
+
+        .my-2 {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .px-2 {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .py-1 {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+
+        .w-4 {
+            width: 1rem;
+        }
+
+        /* Body Styles */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* List Styles */
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        /* Todo Item Styles */
+        .Todo-Item {
+            background-color: #f9fafb;
+            border-radius: 0.25rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+        }
+
+        .Todo-Item:hover {
+            background-color: #edf2f7;
+        }
+
+        .Todo-Item p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Trash Icon Styles */
+        .trash-icon {
+            display: inline-block;
+        }
+
+        .trash-icon svg {
+            fill: none;
+            stroke: #718096;
+        }
+
+        .trash-icon:hover svg {
+            stroke: #f56565;
+        }
+
+        /* Joined Session Link Styles */
+        .joinedSession {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4f46e5;
+        }
+
+        .joinedSession:hover {
+            text-decoration: underline;
+        }
+
+        /* Player Leaved Session Link Styles */
+        .playerLeavedSession {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4f46e5;
+        }
+
+        .playerLeavedSession:hover {
+            text-decoration: underline;
+        }
+
+        /* Player Joined Session Link Styles */
+        .playerJoinedSession {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #4f46e5;
+        }
+
+        .playerJoinedSession:hover {
+            text-decoration: underline;
+        }
+
+        /* Count Overdue Styles */
+        #count-overdue {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1;
+            text-align: center;
+        }
+
+        /* Hide Trash Icon Styles */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 640px) {
+            .Todo-Item {
+                padding: 1rem;
+            }
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Div container */
+        div {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Title */
+        h5 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Todo Item */
+        .Todo-Item {
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        /* Flexbox */
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Trash Icon */
+        .trash-icon {
+            cursor: pointer;
+        }
+
+        /* Hover on Todo Item */
+        .hover-bg {
+            background-color: #f9f9f9;
+        }
+
+        /* List */
+        .list {
+            padding-left: 0;
+        }
+
+        /* List Item */
+        .list li {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Joined Session */
+        .joinedSession {
+            display: inline-block;
+            font-size: 14px;
+            color: #007bff;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        /* Player Leaved Session */
+        .playerLeavedSession {
+            display: inline-block;
+            font-size: 14px;
+            color: #ff0000;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        /* Player Joined Session */
+        .playerJoinedSession {
+            display: inline-block;
+            font-size: 14px;
+            color: #006400;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        /* Count Overdue */
+        #warning-count {
+            background-color: #f00;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+
+        /* Red Background */
+        .bg-red-100 {
+            background-color: #fed7d7;
+        }
+
+        /* Border */
+        .border {
+            border: 1px solid;
+        }
+
+        /* Gray Border */
+        .border-gray-300 {
+            border-color: #e2e8f0;
+        }
+
+        /* Rounded Corners */
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        /* Medium Font */
+        .font-medium {
+            font-weight: 500;
+        }
+
+        /* Red Text */
+        .text-red-900 {
+            color: #9b2c2c;
+        }
+
+        /* Padding */
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* Padding Top and Bottom */
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Background Color Gray */
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+
+        /* Black Text */
+        .text-black {
+            color: #000;
+        }
+
+        /* Width Fit */
+        .w-fit {
+            width: fit-content;
+        }
+
+        /* My-2 */
+        .my-2 {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* PX-2 */
+        .px-2 {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        /* Hover Purple */
+        .hover-bg-purple {
+            background-color: #f3ebff;
+        }
+
+        /* Purple 50 */
+        .bg-purple-50 {
+            background-color: #f5f3ff;
+        }
+
+        /* Margin Right */
+        .mr-2 {
+            margin-right: 0.5rem;
+        }
+
+        /* Margin Bottom */
+        /* Utility classes */
+        .w-fit {
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+
+        .none {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Styles for the trash icon */
+        .trash-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(220, 38, 38, var(--tw-bg-opacity));
+            width: 1.5rem;
+            height: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .trash-icon:hover {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        /* Styles for the "Join Session" and "Leave Session" links */
+        .joinedSession,
+        .playerLeavedSession,
+        .playerJoinedSession {
+            color: white;
+            background-color: #6366f1;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin-right: 0.5rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .joinedSession:hover,
+        .playerLeavedSession:hover,
+        .playerJoinedSession:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <% if(messages && messages.error && messages.error.length> 0) { %>
+            <% for(var i=0; i<messages.error.length; i++) { %>
+                <p class="bg-red-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+                    <%= messages.error[i] %>
+                </p>
+                <% } %>
+                    <% } %>
+                        <h5 style="display: inline">
+                            <%= title %>
+                        </h5><span style="display:inline" id='count-overdue'
+                            class="w-4 h-4 bg-gray-300 text-black px-3 py-1 rounded font-medium mr-2 mb-2">
+                            <%= data.length %>
+                        </span>
+                        <ul class="list none">
+                                <p>Created Session By You</p>
+                                <% for(var i=0; i< data.length;i++) { %>
+                                    <li class="Todo-Item">
+                                        <div class="flex w-fit my-2 px-2 py-1 items-center hover:bg-purple-50">
+                                            <p>Session <%=i+1%>
+                                            </p>
+                                            <div>
+                                                <br>
+                                                <p>
+                                                    <%= data[i].date %>
+                                                </p>
+                                                <p>
+                                                    <%= data[i].time %>
+                                                </p>
+                                                <p>
+                                                    <%= data[i].place %>
+                                                </p>
+                                                <p>
+                                                    <%= data[i].player %>
+                                                </p>
+                                                <p>
+                                                    <%= data[i].TotalPlayer %>
+                                                </p>
+                                            </div>
+                                            <a href="/cancelSession/<%= data[i].sportId%>/<%= data[i].id%>" class="hidden trash-icon ml-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <br><a class="joinedSession"
+                                            href="/sportDetail/<%= data[i].sportId %>/joinSession/<%= data[i].id %>"
+                                            onclick="joinSession(<%= data[i].sportId%>)">Join Session</a>
+                                            <br><a class="playerLeavedSession"
+                                            href="/sportDetail/<%= data[i].sportId %>/leaveSession/<%= data[i].id %>"
+                                            onclick="leaveSession(<%= data[i].sportId%>)">Leave Session</a>
+                                        <div class="h-full max-h-full flex flex-col items-center content-center p-20 ">
+                                        </div>
+                                    </li>
+                                    <% } %>
+                        </ul>
+    </div>
+
+</body>
+
+</html>
