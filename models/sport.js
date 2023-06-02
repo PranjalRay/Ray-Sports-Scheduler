@@ -1,5 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Sport extends Model {
     /**
@@ -9,49 +11,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Sport.belongsTo(models.User, {
+      Sport.hasMany(models.SportSession,{
+        foreignKey: "sportId"
+      })
+      Sport.hasMany(models.cancelSession,{
+        foreignKey: "sportId"
+      })
+      Sport.belongsTo(models.SportSession, {
         foreignKey: "userId",
       });
-      Sport.hasMany(models.Sessions, {
-        foreignKey: "sportId",
-      });
+      // Sport.hasMany(models.SportSession,{
+      //   foreignKey: "SportName"
+      // })
     }
 
-    static addSport({ title, userId }) {
-      return this.create({ title, userId });
+    static async addSport({SportName,userId}){
+      return this.create({SportName:SportName,userId:userId});
     }
 
-    static getSports() {
+    static async getSportName(){
       return this.findAll();
     }
 
-    static UsergetSports(userId) {
-      return this.findAll({
-        where: {
-          userId,
-        },
-      });
+    static async perticulerSport(id){
+      return this.findByPk(id);
     }
 
-    static async remove(id) {
-      return this.destroy({
-        where: { id },
-      });
-    }
-
-    static async setTitle(newtitle, sport) {
-      return sport.update({ title: newtitle });
+    static async remove(id){
+      return this.destroy({where:{
+        id,
+      }});
     }
   }
-  Sport.init(
-    {
-      title: DataTypes.STRING,
-      userId: DataTypes.INTEGER,
-    },
-    {
-      sequelize,
-      modelName: "Sport",
-    }
-  );
+  Sport.init({
+    SportName: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Sport',
+  });
   return Sport;
 };
