@@ -20,6 +20,7 @@ const { request } = require("http");
 const { log } = require("util");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
+const axios= require('axios')
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
