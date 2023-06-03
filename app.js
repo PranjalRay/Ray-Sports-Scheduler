@@ -221,7 +221,7 @@ app.post('/session',validateUser, async (request, response, done) => {
 
   // Verify the reCAPTCHA response
   const verificationURL = 'https://www.google.com/recaptcha/api/siteverify';
-  const secretKey = '6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3'; // Replace with your reCAPTCHA secret key
+  const secretKey = '6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q'; // Replace with your reCAPTCHA secret key
 
     const recaptchaVerification = await axios.post(verificationURL, null, {
       params: {
