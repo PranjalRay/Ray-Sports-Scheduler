@@ -222,7 +222,7 @@ app.post(
     failureRedirect: "/login",
     failureFlash: true,
   }),
-  (request, response, next) => {
+  (request, response, done) => {
     const user = request.user;
     const userEmail = request.user.email;
     const userPassword = request.user.password;
