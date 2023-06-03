@@ -81,13 +81,11 @@ app.use(function (request, response, next) {
 function AdminOfSport(request, response, next) {
   const adminEmail = request.user.email;
   const actualAdminEmail = "admin@admin.com";
-  const adminPassword = request.user.password;
-  const actualAdminPassword = "admin";
-  if (adminEmail == actualAdminEmail && adminPassword == actualAdminPassword) {
+  if (adminEmail == actualAdminEmail) {
     return next();
   } else {
     response.redirect("/sportList");
-    request.flash("error", "Please login with correct credentials.");
+    request.flash("error", "Please login with admin user id and password.");
   }
 }
 function validateUser(req, res, next) {
@@ -183,7 +181,7 @@ app.post("/users", async (request, response) => {
     isAdmin = true;
   }
   if (request.body.firstName.length == 0) {
-    request.flash("error", "First Name cannot be empty!");
+    request.flash("error", "First-Name cannot be empty!");
     return response.redirect("/signup");
   }
   if (request.body.email.length == 0) {
@@ -195,7 +193,6 @@ app.post("/users", async (request, response) => {
     return response.redirect("/signup");
   }
   const hashedpwd = await bcrypt.hash(request.body.password, saltRounds);
-  console.log(hashedpwd);
   try {
     const user = await User.create({
       firstName: request.body.firstName,
@@ -224,7 +221,7 @@ app.post(
   }),
   (request, response) => {
     const userId = request.user.id;
-    request.flash("success", "You have logged-in successfully.");
+    request.flash("success", "You have logged in successfully.");
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
     } else {
@@ -482,7 +479,7 @@ app.get(
       console.log(CountPlayers);
       const date = new Date().toISOString();
       if (splitPlayer.includes(me)) {
-        request.flash("success", "You have already joined this session!");
+        request.flash("success", "You have already joined session!");
       } else if (players.date < date) {
         request.flash("error", "You cannot join past Session");
       } else if (CountPlayers < TotalPlayer) {
@@ -497,9 +494,9 @@ app.get(
             where: { id: sessionId },
           }
         );
-        request.flash("success", "You have Successfully joined session.");
+        request.flash("success", "You have Successfully joined the session.");
       } else {
-        request.flash("error", "Sorry, the session is full!");
+        request.flash("error", "Sorry,session is full!");
       }
       let arrToString = splitPlayer.toString();
       await SportSession.updatePlayer({
@@ -549,9 +546,9 @@ app.get(
       if (splitPlayer.includes(me)) {
         splitPlayer.splice(indexOfme, 1);
         playerIdList.splice(indexPlayerId, 1);
-        request.flash("success", "You have Successfully left the session.");
+        request.flash("success", "You have Successfully lefy the session.");
       } else {
-        request.flash("error", "Sorry, You are not in the session!");
+        request.flash("error", "Sorry, You are not in session!");
       }
       console.log(playerIdList);
       let arrToString = splitPlayer.toString();
@@ -734,7 +731,7 @@ app.post(
           },
         }
       );
-      request.flash("success", "Password has been reset!");
+      request.flash("success", "Password reset is done!");
       response.redirect("/login");
     } catch (error) {
       console.log(error);
