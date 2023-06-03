@@ -223,12 +223,15 @@ app.post(
     failureFlash: true,
   }),
   (request, response) => {
-    const userId = request.user.id;
-    request.flash("success", "You have logged-in successfully.");
-    if (!request.user.password || !request.user.email) {
-      response.redirect("/login"); // Redirect to index page
-      return; // Exit the function
+    const user = request.user;
+    if (!user || !user.password) {
+      // Redirect to index page or any other desired page
+      response.redirect("/index");
+      return;
     }
+
+    const userId = user.id;
+    request.flash("success", "You have logged in successfully.");
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
     } else {
@@ -236,6 +239,7 @@ app.post(
     }
   }
 );
+
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
