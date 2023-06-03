@@ -2,86 +2,87 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        var token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
-        function deleteSportSession(id, userId) {
-            fetch(`/sportDetail/${id}/${userId}`,
-                {
-                    method: "delete",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        "_csrf": token
-                    })
-                })
-                .then((res) => {
-                    if (res.ok) {
-                        window.location.reload();
-                    }
-                })
-                .catch((err) => console.error(err));
-        }
-    </script>
-    <script>
-        const joinSession = document.querySelectorAll(".joinedSession");
-        joinSession.forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-                console.log(e.target.id);
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= csrfToken %>">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    var token = document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content");
 
-                //  window.location.href = `/sportDetail/${e.target.id}/joinSession`;
-            });
-        });
-        const leaveSession = document.querySelectorAll(".playerLeavedSession");
-        leaveSession.forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-                console.log(e.target.id);
-            });
+    function deleteSportSession(id, userId) {
+      fetch(`/sportDetail/${id}/${userId}`, {
+          method: "delete",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ "_csrf": token })
         })
-    </script>
-    <title>Sport Session Details</Details>
-    </title>
+        .then((res) => {
+          if (res.ok) {
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+
+    const joinSession = document.querySelectorAll(".joinedSession");
+    joinSession.forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        console.log(e.target.id);
+        // window.location.href = `/sportDetail/${e.target.id}/joinSession`;
+      });
+    });
+
+    const leaveSession = document.querySelectorAll(".playerLeavedSession");
+    leaveSession.forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        console.log(e.target.id);
+      });
+    });
+  </script>
+  <title>Sport Session Details</title>
 </head>
 
 <body>
-    <% if(messages && messages.success && messages.success.length > 0)  { %>
-        <% for(var i=0; i<messages.success.length; i++) { %>
-          <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
-        <% } %>
-      <% } %>
-      <% if(messages && messages.error && messages.error.length> 0) { %>
-        <% for(var i=0; i<messages.error.length; i++) { %>
-            <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
-                <%= messages.error[i] %>
-            </p>
-            <% } %>
-                <% } %>
-    <div>
-        <%- include('SportSessionBase.ejs',{title:"Sport Session Information",data:NotrowsOfPlayerJoinedId}) %>
-        <%- include('joinedSessionSaperateList.ejs',{title:"Sport Session Information",data:rowsOfPlayerJoinedId}) %>
-        <%- include('createdSessionByUserList.ejs',{title:"Sport Session Information",data:saperateCreatedSession}) %>
-        <%- include('canceledSession.ejs',{title:"Sport Session Information",data:canceledSession}) %>
-    </div>
-    <div class="h-full max-h-full flex flex-col items-center justify-center content-center p-20 ">
-        <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
-            <a href="/playerJoinedSession/<%=sportDetail.id%>/<%=rowsOfPlayerJoinedId.id%>" class="text-center">>View Already Joined Session/s</a>
-        </div>
-    </div>
-    <div class="h-full max-h-full flex flex-col items-center justify-center content-center p-20 ">
-        <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
-            <br><a href="/SportList" class="text-center">>Home</a>
-        </div>
-    </div>
-    <div class="col-start-3 col-span-2">
-        <%- include('footer.ejs') %>
+  <% if(messages && messages.success && messages.success.length > 0) { %>
+  <% for(var i=0; i<messages.success.length; i++) { %>
+  <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2">
+    <%= messages.success[i] %>
+  </p>
+  <% } %>
+  <% } %>
+
+  <% if(messages && messages.error && messages.error.length > 0) { %>
+  <% for(var i=0; i<messages.error.length; i++) { %>
+  <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+    <%= messages.error[i] %>
+  </p>
+  <% } %>
+  <% } %>
+
+  <div class="flex flex-col items-center justify-center p-20">
+    <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl mb-4">
+      <a href="/playerJoinedSession/<%=sportDetail.id%>/<%=rowsOfPlayerJoinedId.id%>" class="text-center">>View Already Joined Session/s</a>
     </div>
 
+    <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
+      <br>
+      <a href="/SportList" class="text-center">>Home</a>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center justify-center">
+    <%- include('SportSessionBase.ejs', { title: "Sport Session Information", data: NotrowsOfPlayerJoinedId }) %>
+    <%- include('joinedSessionSaperateList.ejs', { title: "Sport Session Information", data: rowsOfPlayerJoinedId }) %>
+    <%- include('createdSessionByUserList.ejs', { title: "Sport Session Information", data: saperateCreatedSession }) %>
+    <%- include('canceledSession.ejs', { title: "Sport Session Information", data: canceledSession }) %>
+  </div>
+
+  <div class="col-start-3 col-span-2">
+    <%- include('footer.ejs') %>
+  </div>
 </body>
 
 </html>
