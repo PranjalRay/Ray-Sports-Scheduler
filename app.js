@@ -217,16 +217,19 @@ app.post("/users", async (request, response) => {
   }
 });
 app.post('/session',validateUser, async (request, response, done) => {
-  const { username, password, 'g-recaptcha-response': recaptchaResponse } = request.body;
+  const { email, password, recaptchaToken } = request.body;
 
   // Verify the reCAPTCHA response
   const verificationURL = 'https://www.google.com/recaptcha/api/siteverify';
   const secretKey = '6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3'; // Replace with your reCAPTCHA secret key
 
-  const recaptchaVerification = await axios.post(verificationURL, {
-    secret: secretKey,
-    response: recaptchaResponse
-  });
+ try {
+    const recaptchaVerification = await axios.post(verificationURL, null, {
+      params: {
+        secret: secretKey,
+        response: recaptchaToken
+      }
+    });
 
   if (recaptchaVerification.data.success) {
     // reCAPTCHA verification passed, continue with authentication
@@ -239,7 +242,12 @@ app.post('/session',validateUser, async (request, response, done) => {
     // reCAPTCHA verification failed
     request.flash('error', 'reCAPTCHA verification failed. Please try again.');
     response.redirect('/login');
+  }catch (error) {
+    console.error('Error verifying reCAPTCHA:', error);
+    request.flash('error', 'An error occurred while verifying reCAPTCHA. Please try again.');
+    response.redirect('/login');
   }
+});
   const userId = user.id;
     request.flash("success", "You have logged in successfully.");
     if (AdminOfSport) {
