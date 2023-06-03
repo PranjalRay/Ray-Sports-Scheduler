@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="<%= csrfToken %>">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <script>
         var token = document
             .querySelector('meta[name="csrf-token"]')
@@ -33,273 +34,258 @@
     <style>
         /* Global Styles */
         body {
-          background-color: #fafafa;
-          font-family: 'Arial', sans-serif;
-          color: #333;
-          line-height: 1.5;
-        }
-    
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 1rem;
-        }
-    
-        h1,
-        h2,
-        h3 {
-          margin: 0;
-        }
-    
-        /* Header Styles */
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: #333;
-          padding: 1rem;
-          color: #fff;
-        }
-    
-        .header h1 {
-          font-size: 2rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-        }
-    
-        .header a {
-          color: #fff;
-          text-decoration: none;
-          font-size: 1.2rem;
-          padding: 0.5rem 1rem;
-          border-radius: 5px;
-          background-color: #4caf50;
-          transition: all 0.2s ease-in-out;
-        }
-    
-        .header a:hover {
-          background-color: #357a38;
-        }
-    
-        /* Sport Session Styles */
-        .SessionName {
-          margin-top: 2rem;
-        }
-    
-        .SessionName h1 {
-          font-size: 2rem;
-          text-align: center;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-        }
-    
-        form {
-          margin: 2rem auto;
-          max-width: 600px;
-          background-color: #fff;
-          padding: 2rem;
-          border-radius: 10px;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-    
-        input[type="date"],
-        input[type="time"],
-        input[type="text"],
-        input[type="number"] {
-          display: block;
-          margin: 1rem 0;
-          width: 100%;
-          padding: 0.5rem;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          font-size: 1rem;
-        }
-    
-        label {
-          display: block;
-          margin-bottom: 0.5rem;
-          font-weight: bold;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-        }
-    
-        button[type="submit"] {
-          display: block;
-          margin: 2rem auto 0;
-          padding: 0.5rem 1rem;
-          border: none;
-          border-radius: 5px;
-          background-color: #4caf50;
-          color: #fff;
-          font-size: 1.2rem;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-        }
-    
-        button[type="submit"]:hover {
-          background-color: #357a38;
-        }
-    
-        /* Footer Styles */
-        .footer {
-          text-align: center;
-          padding: 1rem;
-          background-color: #333;
-          color: #fff;
-        }
-    
-        .position {
-    
-          position: absolute;
-          top: 0px;
-          right: 0px;
-        }
-    
-    
-        .container {
-          max-width: 1200px;
-          width: 100%;
-          margin: auto;
-          position: relative;
-        }
-    
-        .text-black {
-          color: #000000;
-        }
-    
-        .font-bold {
-          font-weight: bold;
-        }
-    
-        .px-6 {
-          padding-left: 1.5rem;
-          padding-right: 1.5rem;
-        }
-    
-        .py-9 {
-          padding-top: 2.25rem;
-          padding-bottom: 2.25rem;
-        }
-    
-        .bg-gray-300 {
-          background-color: #D1D5DB;
-        }
-    
-        .rounded-md {
-          border-radius: 0.375rem;
-        }
-    
-        .shadow-2xl {
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-    
-        a {
-          color: #000000;
-          text-decoration: none;
-          font-weight: bold;
-        }
-    
-        a:hover {
-          color: #000000;
-          text-decoration: underline;
-        }
-    
-        @media only screen and (max-width: 600px) {
-          .position {
-            padding: 10px;
-          }
-    
-          .px-6 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-    
-          .py-9 {
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-          }
-        }
-      </style>
+        background: linear-gradient(to right, #8debff, #6cacff);
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      padding: 1rem;
+      color: #fff;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .header a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      background-color: #4caf50;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .header a:hover {
+      background-color: #357a38;
+    }
+
+    /* Sport Session Styles */
+    .session-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .session-container h1 {
+      font-size: 2rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .session-form {
+      margin: 2rem auto;
+      width: 800px;
+      background-image: url(https://th.bing.com/th/id/OIP.Hd69LCQqsixT1ptZhMW-RAHaE-?pid=ImgDet&rs=1);
+      padding: 100px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .session-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .form-label {
+      color: #555;
+      margin-bottom: 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color:pink;
+      margin-top: 20px;
+      position: relative;
+      cursor: default;
+    }
+
+    .form-label:hover::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -20px;
+      transform: translateX(-50%);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #ff5e3a;
+    }
+
+    .session-form input[type="date"],
+    .session-form input[type="time"],
+    .session-form input[type="text"],
+    .session-form input[type="number"] {
+      display: block;
+      margin: 1rem 0;
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .session-form button[type="submit"] {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .session-form button[type="submit"]:hover {
+      background-color: #357a38;
+    }
+
+    /* Custom Utility Classes (Tailwind CSS) */
+    .text-black {
+      color: #000000;
+    }
+
+    .font-bold {
+      font-weight: bold;
+    }
+
+    .px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .py-9 {
+      padding-top: 2.25rem;
+      padding-bottom: 2.25rem;
+    }
+
+    .bg-gray-300 {
+      background-color: #D1D5DB;
+    }
+
+    .rounded-md {
+      border-radius: 0.375rem;
+    }
+
+    .shadow-2xl {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    a {
+      color: #000000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .position {
+        padding: 10px;
+        justify-content: center;
+      }
+
+      .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .py-9 {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .fancy {
+      @supports (background-clip: text) or (-webkit-background-clip: text) {
+        background-image: url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+        background-size: 110% auto;
+        background-position: center;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-size: 40px;
+        line-height: 1.2;
+        text-align: center;
+      }
+    }
+    }
+  </style>
 </head>
 
 <body>
   <% if(messages && messages.success && messages.success.length > 0)  { %>
-    <% for(var i=0; i<messages.success.length; i++) { %>
-      <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
-    <% } %>
+  <% for(var i=0; i<messages.success.length; i++) { %>
+  <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
   <% } %>
-  <% if(messages && messages.error && messages.error.length> 0) { %>
-    <% for(var i=0; i<messages.error.length; i++) { %>
-        <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
-            <%= messages.error[i] %>
-        </p>
-        <% } %>
-            <% } %>
-    <%- include('header.ejs',{data:userName}) %>
+  <% } %>
+  <% if(messages && messages.error && messages.error.length > 0) { %>
+  <% for(var i=0; i<messages.error.length; i++) { %>
+  <p class="bg-red-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2"><%= messages.error[i] %></p>
+  <% } %>
+  <% } %>
 
+  <div class="header">
+    <h1 class="fancy">SPORTS</h1>
+    <a href="/sportDetail/<%= sportDetail.id %>">>View Sessions</a><a href="/SportList">>Home</a>
+  </div>
+
+  <div class="session-container">
+    <h1>New <%= sportDetail.SportName %> Session</h1>
+
+    <div class="session-form">
+      <form action="/sessionCreate/<%= sportDetail.id %>/<%= sportDetail.userId %>/<%= sportDetail.SportName %>" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="mb-5">
+          <label for="date" class="form-label">Date</label><br>
+          <input type="date" name="date" required>
         </div>
-        <div class="SessionName">
-            <h1 class="mx-14 py-4 text-3xl font-semibold">New <%= sportDetail.SportName %> Session</h1>
+        <div class="mb-5">
+          <label for="time" class="form-label">Time</label><br>
+          <input type="time" name="time" required>
+        </div>
+        <div class="mb-5">
+          <label for="place" class="form-label">Place</label><br>
+          <input type="text" name="place" placeholder="Place of sport" required>
+        </div>
+        <div class="mb-5">
+          <label for="player" class="form-label">Name of Players</label><br>
+          <input type="text" name="player" placeholder="Name of players(comma separated)" required>
+        </div>
+        <div class="mb-5">
+          <label for="TotalPlayer" class="form-label">Total Players</label><br>
+          <input type="number" name="TotalPlayer" placeholder="Total Number of Players" required>
         </div>
         <div>
-            <div class="h-full max-h-full flex flex-col items-center justify-center content-center p-20 ">
-                <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
-                    <form action="/sessionCreate/<%= sportDetail.id %>/<%= sportDetail.userId %>/<%= sportDetail.SportName %>" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                        <div class="mb-5 flex flex-row space-x-28 items-center">
-                            <label for="date">Date =></label>
-                            <input type="date" name="date"
-                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
-                                required>
-                        </div>
-                        <div class="mb-5 flex flex-row space-x-28 items-center">
-                            <label for="time">Time =></label>
-                            <input type="time" name="time"
-                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
-                                required>
-                        </div>
-                        <div class="mb-5 flex flex-row space-x-28 items-center">
-                            <label for="place">Place =></label>
-                            <input type="text" name="place" placeholder="What's the place of sport?"
-                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
-                                required>
-                        </div>
-                        <div class="mb-5 flex flex-row space-x-28 items-center">
-                            <label for="player">Player =></label>
-                            <input type="text" name="player" placeholder="What's the name of players?(comma saperated)"
-                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
-                                required>
-                        </div>
-                        <div class="mb-5 flex flex-row space-x-28 items-center">
-                            <label for="TotalPlayer">Total Player =></label>
-                            <input type="number" name="TotalPlayer" placeholder="What's the total of player?"
-                                class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2"
-                                required>
-                        </div>
-                        <div>
-                            <button type="submit"
-                                class="bg-green-600 px-5 py-1.5 mr-2 font-medium text-white rounded">Add</button>
-                        </div>
-                </div>
-                </form>
-                <div class="position">
-                    <div class="container">
-                      <div class="text-black flex-row font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
-                        <a href="/sportDetail/<%= sportDetail.id %>" class="absolute">>View Sessions</a><br>
-                        <br><a href="/SportList" class="absolute">>Home</a>
-                      </div>
-                    </div>
-                  </div>
-            </div>
-
-            
-                            <div class="col-start-3 col-span-2">
-                                <%- include('footer.ejs') %>
-                            </div>
+          <button type="submit"><i class="fas fa-lock"></i>  ADD</button>
         </div>
-        </div>
+      </form>
+    </div>
 </body>
 
 </html>
