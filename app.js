@@ -216,26 +216,31 @@ app.post("/users", async (request, response) => {
     console.log(error);
   }
 });
-app.post(
-  "/session",
-  validateUser,
-  passport.authenticate("local", {
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-  (request, response, done) => {
-    const user = request.user;
-    const userEmail = request.user.email;
-    const userPassword = request.user.password;
-    if (!userEmail || !user.email) {
-      request.flash("error", "Invalid credentials. Please try again.");
-      return;
-    }
-    if (!userPassword || !user.password) {
-      request.flash("error", "Invalid credentials. Please try again.");
-      return;
-    }
-    const userId = user.id;
+app.post('/session',validateUser, async (request, response, done) => {
+  const { username, password, 'g-recaptcha-response': recaptchaResponse } = request.body;
+
+  // Verify the reCAPTCHA response
+  const verificationURL = 'https://www.google.com/recaptcha/api/siteverify';
+  const secretKey = 'YOUR_RECAPTCHA_SECRET_KEY'; // Replace with your reCAPTCHA secret key
+
+  const recaptchaVerification = await axios.post(verificationURL, {
+    secret: secretKey,
+    response: recaptchaResponse
+  });
+
+  if (recaptchaVerification.data.success) {
+    // reCAPTCHA verification passed, continue with authentication
+
+    passport.authenticate('local', {
+      failureRedirect: '/login',
+      failureFlash: true
+    })(request, response, done);
+  } else {
+    // reCAPTCHA verification failed
+    request.flash('error', 'reCAPTCHA verification failed. Please try again.');
+    response.redirect('/login');
+  }
+  const userId = user.id;
     request.flash("success", "You have logged in successfully.");
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
@@ -244,6 +249,8 @@ app.post(
     }
   }
 );
+});
+
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
