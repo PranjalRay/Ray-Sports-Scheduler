@@ -4,25 +4,17 @@ The Sports Scheduling App is a web application designed to manage and schedule s
 
 ## Features
 
-- User Registration and Login: Users can create an account and log in to the app.
+- User Registration and Login
 - Session Creation: Users can create new sports sessions, specifying the date, time, location, and number of players.
 - Session Joining: Users can join existing sports sessions if there are available spots.
 - Session Management: Users can view and manage the sports sessions they have created or joined.
 - Admin Privileges: Admin users have additional privileges to create new sports and manage all sessions.
-- User Authentication: The app uses secure authentication mechanisms to protect user accounts.
-- Error Handling: The app includes error handling and validation to provide a smooth user experience.
+- User Authentication
+- Error Handling
 
 ## Technologies Used
 
-Node.js: The backend of the app is built using Node.js, which allows for efficient and scalable server-side JavaScript development.
-Express.js: Express.js is a popular Node.js framework used for building web applications. It provides a robust set of features for handling HTTP requests, routing, and middleware.
-Sequelize: Sequelize is an ORM (Object-Relational Mapping) library for Node.js. It provides an easy way to interact with the database and perform CRUD operations.
-Passport.js: Passport.js is an authentication middleware for Node.js. It is used to handle user authentication and session management.
-EJS: EJS (Embedded JavaScript) is a templating engine for Node.js. It is used to generate dynamic HTML pages on the server-side.
-bcrypt: bcrypt is a password hashing library used to securely store user passwords in the database.
-CSRF Protection: The app uses CSRF (Cross-Site Request Forgery) protection to prevent unauthorized requests.
-Flash Messages: Flash messages are used to display success and error messages to the users.
-Error Handling: The app includes error handling mechanisms to gracefully handle any unexpected errors that may occur.
+Node.js, Express.js, Sequelize, Passport.js, EJS, bcrypt, CSRF Protection, Flash Messages, Error Handling
 
 ## Installation
 
