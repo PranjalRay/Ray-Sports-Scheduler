@@ -10,244 +10,64 @@
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <title>Sport Schedule Report</title>
 </head>
-<style>
-    /* Body and HTML styles */
-    body {
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        background-color: #f2f2f2;
-    }
-
-    /* Headings */
-    h1 {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-
-    /* Links */
-    a {
-        color: #3498db;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    /* Paragraphs */
-    p {
-        margin-bottom: 0.5rem;
-    }
-
-    /* Text colors */
-    .text-black {
-        color: #333;
-    }
-
-    /* Containers */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    /* Buttons */
-    .btn {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
-    }
-
-    .btn:hover {
-        background-color: #2980b9;
-    }
-
-    /* Grid */
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        margin: -1rem;
-    }
-
-    .col {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
-        padding: 1rem;
-    }
-
-    .col-1 {
-        flex-basis: 8.333333%;
-        max-width: 8.333333%;
-    }
-
-    .col-2 {
-        flex-basis: 16.666667%;
-        max-width: 16.666667%;
-    }
-
-    .col-3 {
-        flex-basis: 25%;
-        max-width: 25%;
-    }
-
-    .col-4 {
-        flex-basis: 33.333333%;
-        max-width: 33.333333%;
-    }
-
-    .col-5 {
-        flex-basis: 41.666667%;
-        max-width: 41.666667%;
-    }
-
-    .col-6 {
-        flex-basis: 50%;
-        max-width: 50%;
-    }
-
-    .col-7 {
-        flex-basis: 58.333333%;
-        max-width: 58.333333%;
-    }
-
-    .col-8 {
-        flex-basis: 66.666667%;
-        max-width: 66.666667%;
-    }
-
-    .col-9 {
-        flex-basis: 75%;
-        max-width: 75%;
-    }
-
-    .col-10 {
-        flex-basis: 83.333333%;
-        max-width: 83.333333%;
-    }
-
-    .col-11 {
-        flex-basis: 91.666667%;
-        max-width: 91.666667%;
-    }
-
-    .col-12 {
-        flex-basis: 100%;
-        max-width: 100%;
-    }
-</style>
 
 <body>
-    <div>
-        <h1>Available Sports <span>
-                <%= countSport %>
-            </span></h1>
+    <div class="container">
+        <h1>Available Sports <span><%= countSport %></span></h1>
         <% getSportByName.forEach(function(user) { %>
-            <p>
-                <%= user.SportName %>&nbsp;&nbsp;&nbsp;<span class="text-black">Sport Id: <%=user.id%></span>
-            </p>
-            <% } ) %><br>
+        <p><%= user.SportName %>&nbsp;&nbsp;&nbsp;<span class="text-black">Sport Id: <%= user.id %></span></p>
+        <% }) %><br>
     </div>
-    <div>
+
+    <div class="container">
         <h1>Upcoming Sessions</h1>
         <% getAllSessionDetails.forEach(function(user) { %>
-            <p><span class="text-black">Sport Name: </span>
-                <%=user.SportName%>
-            </p>
-            <p><span class="text-black">Session Id: </span>
-                <%=user.id%>
-            </p>
-            <p><span class="text-black">Session Date: </span>
-                <%=user.date%>
-            </p>
-            <p><span class="text-black">Session Time: </span>
-                <%=user.time%>
-            </p>
-            <p><span class="text-black">Session Place: </span>
-                <%=user.place%>
-            </p>
-            <p><span class="text-black">Participants: </span>
-                <%=user.player%>
-            </p>
-            <p><span class="text-black">Total Participants: </span>
-                <%=user.TotalPlayer%>
-            </p>
-            <p><span class="text-black">Sport Id: </span>
-                <%=user.sportId%>
-            </p><br>
-            <br>
-            <% } ) %><br>
+        <p><span class="text-black">Sport Name: </span><%= user.SportName %></p>
+        <p><span class="text-black">Session Id: </span><%= user.id %></p>
+        <p><span class="text-black">Session Date: </span><%= user.date %></p>
+        <p><span class="text-black">Session Time: </span><%= user.time %></p>
+        <p><span class="text-black">Session Place: </span><%= user.place %></p>
+        <p><span class="text-black">Participants: </span><%= user.player %></p>
+        <p><span class="text-black">Total Participants: </span><%= user.TotalPlayer %></p>
+        <p><span class="text-black">Sport Id: </span><%= user.sportId %></p><br>
+        <% }) %><br>
     </div>
-    <div>
+
+    <div class="container">
         <h1>Ongoing Sessions</h1>
         <% getAllTodaySessionDetails.forEach(function(user) { %>
-            <p><span class="text-black">Sport Name: </span>
-                <%=user.SportName%>
-            </p>
-            <p><span class="text-black">Session Id: </span>
-                <%=user.id%>
-            </p>
-            <p><span class="text-black">Session Date: </span>
-                <%=user.date%>
-            </p>
-            <p><span class="text-black">Session Time: </span>
-                <%=user.time%>
-            </p>
-            <p><span class="text-black">Session Place: </span>
-                <%=user.place%>
-            </p>
-            <p><span class="text-black">Participants: </span>
-                <%=user.player%>
-            </p>
-            <p><span class="text-black">Total Participants: </span>
-                <%=user.TotalPlayer%>
-            </p>
-            <p><span class="text-black">Sport Id: </span>
-                <%=user.sportId%>
-            </p><br>
-            <br>
-            <% } ) %><br>
+        <p><span class="text-black">Sport Name: </span><%= user.SportName %></p>
+        <p><span class="text-black">Session Id: </span><%= user.id %></p>
+        <p><span class="text-black">Session Date: </span><%= user.date %></p>
+        <p><span class="text-black">Session Time: </span><%= user.time %></p>
+        <p><span class="text-black">Session Place: </span><%= user.place %></p>
+        <p><span class="text-black">Participants: </span><%= user.player %></p>
+        <p><span class="text-black">Total Participants: </span><%= user.TotalPlayer %></p>
+        <p><span class="text-black">Sport Id: </span><%= user.sportId %></p><br>
+        <% }) %><br>
     </div>
-    <div>
+
+    <div class="container">
         <h1>Played Sessions</h1>
         <% getAllPreviousSessionDetails.forEach(function(user) { %>
-            <p><span class="text-black">Sport Name: </span>
-                <%=user.SportName%>
-            </p>
-            <p><span class="text-black">Session Id: </span>
-                <%=user.id%>
-            </p>
-            <p><span class="text-black">Session Date: </span>
-                <%=user.date%>
-            </p>
-            <p><span class="text-black">Session Time: </span>
-                <%=user.time%>
-            </p>
-            <p><span class="text-black">Session Place: </span>
-                <%=user.place%>
-            </p>
-            <p><span class="text-black">Participants: </span>
-                <%=user.player%>
-            </p>
-            <p><span class="text-black">Total Participants: </span>
-                <%=user.TotalPlayer%>
-            </p>
-            <p><span class="text-black">Sport Id: </span>
-                <%=user.sportId%>
-            </p><br>
-            <br>
-            <% } ) %><br>
+        <p><span class="text-black">Sport Name: </span><%= user.SportName %></p>
+        <p><span class="text-black">Session Id: </span><%= user.id %></p>
+        <p><span class="text-black">Session Date: </span><%= user.date %></p>
+        <p><span class="text-black">Session Time: </span><%= user.time %></p>
+        <p><span class="text-black">Session Place: </span><%= user.place %></p>
+        <p><span class="text-black">Participants: </span><%= user.player %></p>
+        <p><span class="text-black">Total Participants: </span><%= user.TotalPlayer %></p>
+        <p><span class="text-black">Sport Id: </span><%= user.sportId %></p><br>
+        <% }) %><br>
     </div>
-    <div class="h-full max-h-full flex flex-col items-center content-center p-20 ">
-        <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
-            <br><a href="/sportList" class="text-center">>Home</a>
+
+    <div class="container">
+        <div class="h-full max-h-full flex flex-col items-center content-center p-20">
+            <div class="text-black font-bold px-6 py-9 bg-gray-300 rounded-md shadow-2xl">
+                <br><a href="/sportList" class="text-center">>Home</a>
+            </div>
         </div>
     </div>
 </body>
+
+</html>
