@@ -1,78 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="<%= csrfToken %>">
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></script>
-  <style>
-    /* Your custom styles here */
-  </style>
-</head>
-<body>
-  <div class="grid grid-cols-6">
-    <div class="col-start-3 col-span-2">
-      <% if(messages && messages.success && messages.success.length > 0)  { %>
-        <% for(var i=0; i<messages.success.length; i++) { %>
-          <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
-        <% } %>
-      <% } %>
-      <% if(messages && messages.error && messages.error.length > 0) { %>
-        <% for(var i=0; i<messages.error.length; i++) { %>
-          <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
-            <%= messages.error[i] %>
-          </p>
-        <% } %>
-      <% } %>
-      <p><span class="fancy">LOGIN TO AN ACCOUNT</span></p>
-      <form id="loginForm" action="/session" method="post">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <div class="py-3">
-          <label for="email" class="form-label">Email:</label>
-          <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your email">
-        </div>
-        <div class="py-3">
-          <label for="password" class="form-label">Password:</label>
-          <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password">
-        </div>
-        <div class="g-recaptcha" data-sitekey="6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></div>
-        <button type="button" onclick="validateForm()" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i> SIGN IN</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    function handleRecaptchaToken(token) {
-      // Store the reCAPTCHA token in a hidden input field
-      document.getElementById('recaptchaToken').value = token;
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="<%= csrfToken %>">
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body {
+    
+                background: linear-gradient(to right, #8debff, #6cacff);
+                background-size: cover;
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+    
+            }
+    
+            .col-start-3 {
+                background-image: url(https://th.bing.com/th/id/OIP.Hd69LCQqsixT1ptZhMW-RAHaE-?pid=ImgDet&rs=1);
+                border-radius: 20px;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                width: 500px;
+                max-width: 500px;
+                height: 400px;
+                text-align: center;
+            }
+    
+            form {
+                margin-top: 20px;
+            }
+    
+            label {
+                display: block;
+                font-size: 20px;
+                color: white;
+                margin-bottom: 10px;
+            }
+    
+            button {
+                margin-top: 20px;
+            }
+    
+            .A {
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                
+            }
+            .fancy {
+                @supports (background-clip: text) or (-webkit-background-clip: text) {
+                    background-image: url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+                    background-size: 110% auto;
+                    background-position: center;
+                    color: transparent;
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    font-size: 36px;
+                    line-height: 1.2;
+                    text-align: center;
+                }
+            }
+            .form-label:hover+.note .btn {
+                    transform: translateY(10px);
     }
+                .form-label {
+                color: #555;
+                margin-bottom: 0;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                color:azure;
+                margin-top: 20px;
+                position: relative;
+                cursor: default;
+                }
 
-    grecaptcha.enterprise.ready(function() {
-      grecaptcha.enterprise.execute('6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q', { action: 'login' }).then(handleRecaptchaToken);
-    });
-
-    function validateForm() {
-      // Get the reCAPTCHA token from the hidden input field
-      const recaptchaToken = document.getElementById('recaptchaToken').value;
-
-      // Validate the reCAPTCHA token
-      if (recaptchaToken === '') {
-        alert('Please complete the reCAPTCHA verification.');
-        return;
-      }
-
-      // Submit the form
-      document.getElementById('recaptchaResponse').value = recaptchaToken;
-      document.getElementById('loginForm').submit();
-    }
-  </script>
-  
-  <!-- Hidden input field to store the reCAPTCHA response -->
-  <input type="hidden" id="recaptchaResponse" name="g-recaptcha-response" value="">
-
-</body>
+                .form-label:hover::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -20px;
+                transform: translateX(-50%);
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-top: 10px solid #ff5e3a;
+                }
+        </style>
+    </head>
+    <body>
+        <div class="grid grid-cols-6">
+            <div class="col-start-3 col-span-2">
+                <% if(messages && messages.success && messages.success.length > 0)  { %>
+                    <% for(var i=0; i<messages.success.length; i++) { %>
+                      <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
+                    <% } %>
+                  <% } %>
+                  <% if(messages && messages.error && messages.error.length> 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+                            <%= messages.error[i] %>
+                        </p>
+                        <% } %>
+                            <% } %>
+                            <p><span class="fancy">LOGIN TO AN ACCOUNT</span></p>
+                <form action="/session" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <div class="py-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your email">
+                    </div>
+                    <div class="py-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i>  SIGN IN</button>
+                    
+                </form>
+                
+            </div>
+        </div>
+    </body>
 </html>
