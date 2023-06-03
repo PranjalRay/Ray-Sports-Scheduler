@@ -14,15 +14,15 @@ The Sports Scheduling App is a web application designed to manage and schedule s
 
 ## Technologies Used
 
->Node.js
->Express.js
->Sequelize
->Passport.js 
->EJS
->bcrypt
->CSRF Protection
->Flash Messages
->Error Handling
+-Node.js
+-Express.js
+-Sequelize
+-Passport.js 
+-EJS
+-bcrypt
+-CSRF Protection
+-Flash Messages
+-Error Handling
 
 ## Installation
 
