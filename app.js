@@ -224,12 +224,16 @@ app.post(
   }),
   (request, response) => {
     const user = request.user;
-    if (!user || !user.password) {
-      // Redirect to index page or any other desired page
-      response.redirect("/index");
+    const userEmail = request.user.email;
+    const userPassword = request.user.password;
+    if (!userEmail || !user.email) {
+      request.flash("error", "Invalid credentials. Please try again.");
       return;
     }
-
+    if (!userPassword || !user.password) {
+      request.flash("error", "Invalid credentials. Please try again.");
+      return;
+    }
     const userId = user.id;
     request.flash("success", "You have logged in successfully.");
     if (AdminOfSport) {
@@ -239,7 +243,6 @@ app.post(
     }
   }
 );
-
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
