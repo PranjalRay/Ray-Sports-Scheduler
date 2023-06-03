@@ -20,7 +20,6 @@ const { request } = require("http");
 const { log } = require("util");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
-const axios= require('axios')
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -216,39 +215,23 @@ app.post("/users", async (request, response) => {
     console.log(error);
   }
 });
-app.post('/session',validateUser, async (request, response, done) => {
-  const { email, password } = request.body;
-  const recaptchaResponse = request.body['g-recaptcha-response'];
-
-  // Verify the reCAPTCHA response
-  const verificationURL = 'https://www.google.com/recaptcha/api/siteverify';
-  const secretKey = '6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q'; // Replace with your reCAPTCHA secret key
-
-    const recaptchaVerification = await axios.post(verificationURL,{
-        secret: secretKey,
-        response: recaptchaToken
-    });
-
-  if (recaptchaVerification.data.success) {
-    // reCAPTCHA verification passed, continue with authentication
-
-    passport.authenticate('local', {
-      failureRedirect: '/login',
-      failureFlash: true
-    })(request, response, done);
-  } else {
-    // reCAPTCHA verification failed
-    request.flash('error', 'reCAPTCHA verification failed. Please try again.');
-    response.redirect('/login');
-  }
-  const userId = user.id;
-    request.flash("success", "You have logged in successfully.");
+app.post(
+  "/session",
+  validateUser,
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  (request, response) => {
+    const userId = request.user.id;
+    request.flash("success", "You have logged-in successfully.");
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
     } else {
       response.redirect("/sportList");
     }
-  });
+  }
+);
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
