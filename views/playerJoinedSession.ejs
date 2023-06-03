@@ -20,11 +20,11 @@
 
     /* Add background colors to the table rows */
     tr:nth-child(even) {
-      background-color: #f2f2f2;
+      background-color: orange;
     }
 
     tr:nth-child(odd) {
-      background-color: #fff;
+      background-color: yellow;
     }
 
     /* Add some hover effects */
@@ -35,9 +35,9 @@
     /* Add some styles for the table header */
     th {
       font-weight: bold;
-      background-color: #333;
-      color: #fff;
-      text-align: left;
+      background-color: red;
+      color: white;
+      text-align: center;
       padding: 0.5rem;
       border-bottom: 2px solid #ddd;
     }
@@ -45,34 +45,44 @@
     th:not(:last-child) {
       border-right: 1px solid #ddd;
     }
+
+    /* Center the table */
+    .table-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
   </style>
 </head>
 
 <body>
-  <table>
-    <thead>
-      <tr>
-        <th>Sport Name</th>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Place</th>
-        <th>Time</th>
-        <th>Player</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(var i=0;i< rowsOfPlayerId.length;i++) { %>
-      <tr>
-        <td><%= rowsOfPlayerId[i].SportName %></td>
-        <td><%= rowsOfPlayerId[i].id %></td>
-        <td><%= rowsOfPlayerId[i].date %></td>
-        <td><%= rowsOfPlayerId[i].place %></td>
-        <td><%= rowsOfPlayerId[i].time %></td>
-        <td><%= rowsOfPlayerId[i].player %></td>
-      </tr>
-      <% } %>
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Sport Name</th>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Place</th>
+          <th>Time</th>
+          <th>Player</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(var i=0;i< rowsOfPlayerId.length;i++) { %>
+        <tr>
+          <td><%= rowsOfPlayerId[i].SportName %></td>
+          <td><%= rowsOfPlayerId[i].id %></td>
+          <td><%= rowsOfPlayerId[i].date %></td>
+          <td><%= rowsOfPlayerId[i].place %></td>
+          <td><%= rowsOfPlayerId[i].time %></td>
+          <td><%= rowsOfPlayerId[i].player %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
 </body>
 
 </html>
