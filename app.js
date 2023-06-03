@@ -247,10 +247,7 @@ app.post('/session',validateUser, async (request, response, done) => {
     } else {
       response.redirect("/sportList");
     }
-  }
-);
-});
-
+  });
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
