@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></script>
-    <style>
-        /* Styles */
-    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= csrfToken %>">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></script>
+  <style>
+    /* Your custom styles here */
+  </style>
 </head>
 <body>
-    <div class="grid grid-cols-6">
-        <div class="col-start-3 col-span-2">
-            <% if(messages && messages.success && messages.success.length > 0)  { %>
-                <% for(var i=0; i<messages.success.length; i++) { %>
-                  <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
-                <% } %>
-              <% } %>
-              <% if(messages && messages.error && messages.error.length> 0) { %>
-                <% for(var i=0; i<messages.error.length; i++) { %>
-                    <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
-                        <%= messages.error[i] %>
-                    </p>
-                    <% } %>
-                        <% } %>
-                        <p><span class="fancy">LOGIN TO AN ACCOUNT</span></p>
-            <form id="loginForm" action="/session" method="post">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-
-                <!-- Email input -->
-                <div class="py-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your email" required>
-                </div>
-
-                <!-- Password input -->
-                <div class="py-3">
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password" required>
-                </div>
-
-                <!-- reCAPTCHA container -->
-                <div class="py-3">
-                    <div class="g-recaptcha" data-sitekey="6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></div>
-                </div>
-
-                <!-- Submit button -->
-                <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i>  SIGN IN</button>
-            </form>
+  <div class="grid grid-cols-6">
+    <div class="col-start-3 col-span-2">
+      <% if(messages && messages.success && messages.success.length > 0)  { %>
+        <% for(var i=0; i<messages.success.length; i++) { %>
+          <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-green-900 px-4 py-2"><%= messages.success[i] %></p>
+        <% } %>
+      <% } %>
+      <% if(messages && messages.error && messages.error.length > 0) { %>
+        <% for(var i=0; i<messages.error.length; i++) { %>
+          <p class="bg-green-100 border border-gray-300 p-2 font-medium rounded text-red-900 px-4 py-2">
+            <%= messages.error[i] %>
+          </p>
+        <% } %>
+      <% } %>
+      <p><span class="fancy">LOGIN TO AN ACCOUNT</span></p>
+      <form id="loginForm" action="/session" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="py-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" name="email" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your email">
         </div>
+        <div class="py-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password">
+        </div>
+        <div class="g-recaptcha" data-sitekey="6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q"></div>
+        <button type="button" onclick="validateForm()" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i> SIGN IN</button>
+      </form>
     </div>
+  </div>
 
-    <script>
-        function onSubmitLoginForm(event) {
-            event.preventDefault();
+  <script>
+    function handleRecaptchaToken(token) {
+      // Store the reCAPTCHA token in a hidden input field
+      document.getElementById('recaptchaToken').value = token;
+    }
 
-            grecaptcha.enterprise.ready(function() {
-                grecaptcha.enterprise.execute('6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q', { action: 'login' })
-                    .then(function(token) {
-                        // Append the reCAPTCHA token to the login form
-                        document.getElementById('recaptchaToken').value = token;
+    grecaptcha.enterprise.ready(function() {
+      grecaptcha.enterprise.execute('6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q', { action: 'login' }).then(handleRecaptchaToken);
+    });
 
-                        // Submit the form
-                        document.getElementById('loginForm').submit();
-                    });
-            });
-        }
-    </script>
+    function validateForm() {
+      // Get the reCAPTCHA token from the hidden input field
+      const recaptchaToken = document.getElementById('recaptchaToken').value;
+
+      // Validate the reCAPTCHA token
+      if (recaptchaToken === '') {
+        alert('Please complete the reCAPTCHA verification.');
+        return;
+      }
+
+      // Submit the form
+      document.getElementById('recaptchaResponse').value = recaptchaToken;
+      document.getElementById('loginForm').submit();
+    }
+  </script>
+  
+  <!-- Hidden input field to store the reCAPTCHA response -->
+  <input type="hidden" id="recaptchaResponse" name="g-recaptcha-response" value="">
+
 </body>
 </html>
