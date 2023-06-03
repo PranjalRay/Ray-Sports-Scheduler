@@ -9,13 +9,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3"></script>
-        <script>
-            grecaptcha.enterprise.ready(function() {
-        grecaptcha.enterprise.execute('6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3', {action: 'login'}).then(function(token) {
-       ...
-    });
-});
-</script>
         <style>
             body {
     
@@ -129,12 +122,48 @@
                         <label for="password" class="form-label">Password:</label>
                         <input type="password" name="password" class="border border-gray-300 text-gray-900 rounded p-2 w-full" placeholder="Enter your password">
                     </div>
-                    div class="g-recaptcha" data-sitekey="6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3"></div>
+                    <div class="g-recaptcha" data-sitekey="6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3"></div>
                     <button type="submit" class="text-white bg-green-600 hover:bg-green-600 font-medium rounded px-5 py-2"><i class="fas fa-lock"></i>  SIGN IN</button>
                     
                 </form>
                 
             </div>
         </div>
+     <!-- ...your HTML code... -->
+
+<script>
+  function handleRecaptchaToken(token) {
+    // Store the reCAPTCHA token in a hidden input field
+    document.getElementById('recaptchaToken').value = token;
+  }
+
+  grecaptcha.enterprise.ready(function() {
+    grecaptcha.enterprise.execute('6LdD_WMmAAAAALK_TgOa0wrB49QLBlcDY2WshNf3', { action: 'login' }).then(handleRecaptchaToken);
+  });
+
+  function validateForm() {
+    // Get the reCAPTCHA token from the hidden input field
+    const recaptchaToken = document.getElementById('recaptchaToken').value;
+
+    // Validate the form or perform any other actions here
+    // For example, you can make an AJAX request to your server to validate the reCAPTCHA token
+
+    // Submit the form
+    document.getElementById('loginForm').submit();
+  }
+</script>
+
+<form id="loginForm" action="/session" method="post">
+  <!-- ...your form fields... -->
+
+  <!-- Hidden input field to store the reCAPTCHA token -->
+  <input type="hidden" id="recaptchaToken" name="recaptchaToken" value="">
+
+  <!-- Submit button with onclick event to trigger form validation -->
+  <button type="button" onclick="validateForm()">Submit</button>
+</form>
+
+<!-- ...your HTML code... -->
+
     </body>
 </html>
