@@ -217,17 +217,16 @@ app.post("/users", async (request, response) => {
   }
 });
 app.post('/session',validateUser, async (request, response, done) => {
-  const { email, password, recaptchaToken } = request.body;
+  const { email, password } = request.body;
+  const recaptchaResponse = request.body['g-recaptcha-response'];
 
   // Verify the reCAPTCHA response
   const verificationURL = 'https://www.google.com/recaptcha/api/siteverify';
   const secretKey = '6LdD_WMmAAAAACSXV1QaJt3e3AbREng1qnKCJ11Q'; // Replace with your reCAPTCHA secret key
 
-    const recaptchaVerification = await axios.post(verificationURL, null, {
-      params: {
+    const recaptchaVerification = await axios.post(verificationURL,{
         secret: secretKey,
         response: recaptchaToken
-      }
     });
 
   if (recaptchaVerification.data.success) {
