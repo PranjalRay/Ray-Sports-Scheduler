@@ -225,6 +225,10 @@ app.post(
   (request, response) => {
     const userId = request.user.id;
     request.flash("success", "You have logged-in successfully.");
+    if (!request.user.password || !request.user.email) {
+      response.redirect("/login"); // Redirect to index page
+      return; // Exit the function
+    }
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
     } else {
