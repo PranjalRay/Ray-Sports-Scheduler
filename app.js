@@ -20,7 +20,6 @@ const { request } = require("http");
 const { log } = require("util");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
-//const { next } = require("cheerio/lib/api/traversing");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,19 +32,13 @@ app.use(
     },
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
-
 const saltRounds = 10;
-
 app.set("view engine", "ejs");
-
 app.set("views", path.join(__dirname, "views"));
-
 app.use(express.static(path.join(__dirname + "/public")));
 app.use(flash());
-
 passport.use(
   new LocalStrategy(
     {
@@ -59,7 +52,7 @@ passport.use(
           if (result) {
             return done(null, user);
           } else {
-            return done(null, false, { message: "Invalid password" });
+            return done(null, false, { message: "Invalid Credentials" });
           }
         })
         .catch((error) => {
@@ -68,12 +61,10 @@ passport.use(
     }
   )
 );
-
 passport.serializeUser((user, done) => {
   console.log("Serializing user in session", user.id);
   done(null, user.id);
 });
-
 passport.deserializeUser((id, done) => {
   User.findByPk(id)
     .then((user) => {
@@ -83,29 +74,23 @@ passport.deserializeUser((id, done) => {
       done(error, null);
     });
 });
-
 app.use(function (request, response, next) {
   response.locals.messages = request.flash();
   next();
 });
-
 function AdminOfSport(request, response, next) {
   const adminEmail = request.user.email;
-  const actualAdminEmail = "rankr@admin.com";
-
-  if (adminEmail == actualAdminEmail) {
+  const actualAdminEmail = "admin@admin.com";
+  const adminPassword = request.user.password;
+  const actualAdminPassword = "admin";
+  if (adminEmail == actualAdminEmail && adminPassword == actualAdminPassword) {
     return next();
   } else {
-    response.redirect("/sportList");
-    request.flash("error", "Please login with admin user id and password.");
+    response.redirect("/login");
+    request.flash("error", "Please login with correct credentials.");
   }
 }
-
 function validateUser(req, res, next) {
-  // validattte csrf
-  // validate user (user email, user pass )
-
-  console.log("hlw");
   User.findOne({ where: { email: req.body.email } })
     .then(async (user) => {
       console.log(user);
@@ -113,27 +98,23 @@ function validateUser(req, res, next) {
       if (result) {
         res.cookie(`em`, user.email, {
           maxAge: 500 * 60 * 60 * 1000,
-          // expires works the same as the maxAge
           secure: true,
           httpOnly: true,
         });
         res.cookie(`ps`, user.password, {
           maxAge: 500 * 60 * 60 * 1000,
-          // expires works the same as the maxAge
           secure: true,
           httpOnly: true,
         });
         res.cookie(`fn`, user.firstName, {
           maxAge: 500 * 60 * 60 * 1000,
-          // expires works the same as the maxAge
           secure: true,
           httpOnly: true,
         });
         console.log(result);
         next();
-        //return done(null, user);
       } else {
-        return done(null, false, { message: "Invalid password" });
+        return done(null, false, { message: "Invalid Credentials" });
       }
     })
     .catch((error) => {
@@ -152,20 +133,17 @@ app.get("/", async function (request, response) {
     response.json({});
   }
 });
-
 app.get("/player", (request, response) => {
   response.render("player", {
     title: "player",
     csrfToken: request.csrfToken(),
   });
 });
-
 app.get("/signUp", (request, response) => {
   response.render("signup", {
     csrfToken: request.csrfToken(),
   });
 });
-
 app.get(
   "/SportList",
   connectEnsureLogin.ensureLoggedIn(),
@@ -194,28 +172,26 @@ app.get(
     }
   }
 );
-
 app.get("/login", (request, response) => {
   response.render("login", {
     csrfToken: request.csrfToken(),
   });
 });
-
 app.post("/users", async (request, response) => {
   let isAdmin = false;
   if (request.body.isAdmin != true) {
     isAdmin = true;
   }
   if (request.body.firstName.length == 0) {
-    request.flash("error", "First Name can not be empty!");
+    request.flash("error", "First Name cannot be empty!");
     return response.redirect("/signup");
   }
   if (request.body.email.length == 0) {
-    request.flash("error", "Email address can not be empty!");
+    request.flash("error", "Email address cannot be empty!");
     return response.redirect("/signup");
   }
   if (request.body.password.length == 0) {
-    request.flash("error", "Password can not be empty!");
+    request.flash("error", "Password cannot be empty!");
     return response.redirect("/signup");
   }
   const hashedpwd = await bcrypt.hash(request.body.password, saltRounds);
@@ -232,14 +208,13 @@ app.post("/users", async (request, response) => {
       if (error) {
         console.log(error);
       }
-      request.flash("success", "You have signed up successfully.");
+      request.flash("success", "You have signed-up successfully.");
       response.redirect("/login");
     });
   } catch (error) {
     console.log(error);
   }
 });
-
 app.post(
   "/session",
   validateUser,
@@ -249,7 +224,7 @@ app.post(
   }),
   (request, response) => {
     const userId = request.user.id;
-    request.flash("success", "You have logged in successfully.");
+    request.flash("success", "You have logged-in successfully.");
     if (AdminOfSport) {
       response.redirect("/admin/createSport/" + userId);
     } else {
@@ -257,17 +232,15 @@ app.post(
     }
   }
 );
-
 app.get("/signout", (request, response, next) => {
   request.logout((error) => {
     if (error) {
       return next(error);
     }
-    request.flash("success", "You have successfully sign out.");
+    request.flash("success", "You have successfully sign-out.");
     response.redirect("/");
   });
 });
-
 app.get("/admin", async (request, response) => {
   const user = request.user;
   const sportName = await Sport.getSportName();
@@ -277,7 +250,6 @@ app.get("/admin", async (request, response) => {
     csrfToken: request.csrfToken(),
   });
 });
-
 app.get(
   "/admin/createSport/:userId",
   AdminOfSport,
@@ -305,7 +277,6 @@ app.get(
     }
   }
 );
-
 app.post(
   "/admin/createSport/:userId",
   connectEnsureLogin.ensureLoggedIn(),
@@ -330,15 +301,14 @@ app.post(
     }
   }
 );
-
 app.delete(
   "/admin/createSport/:id",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
-    console.log("We have to delete a Sport with ID: ", request.params.id);
+    console.log("We have to delete Sport with ID: ", request.params.id);
     try {
       await Sport.remove(request.params.id);
-      request.flash("success", "You have deleted a sport.");
+      request.flash("success", "You have deleted sport.");
       return response.json({ success: true });
     } catch (error) {
       console.log(error);
@@ -346,7 +316,6 @@ app.delete(
     }
   }
 );
-
 app.get(
   "/sportDetail/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -360,9 +329,6 @@ app.get(
       const sportsession = await SportSession.getSessionDetail(
         request.params.id
       );
-      // console.log("Session ID:");
-      // console.log(request.params.id);
-
       const rowsOfPlayerJoinedId = await SportSession.findAll({
         where: {
           playerId: {
@@ -372,12 +338,8 @@ app.get(
           isCanceled: false,
         },
       });
-
       const NotrowsOfPlayerJoinedId = await SportSession.findAll({
         where: {
-          // player: {
-          //   [Op.not]: [request.cookies.fn],
-          // },
           [Op.not]: {
             playerId: {
               [Op.contains]: [userId],
@@ -387,7 +349,6 @@ app.get(
           isCanceled: false,
         },
       });
-
       const saperateCreatedSession = await SportSession.findAll({
         where: {
           userId: {
@@ -397,7 +358,6 @@ app.get(
           isCanceled: false,
         },
       });
-
       const canceledSession = await SportSession.findAll({
         where: {
           playerId: {
@@ -407,20 +367,9 @@ app.get(
           isCanceled: true,
         },
       });
-
-      console.log("rank");
       console.log(rowsOfPlayerJoinedId);
-      console.log("hello");
       console.log(NotrowsOfPlayerJoinedId);
-      // const sportSession = await SportSession.findOne({
-      //   where: { id: request.params.id },
-      // });
-      //const isJoined = sportSession;
-      //console.log(isJoined);
       const userName = request.cookies.fn;
-      //console.log(sportDetail);
-      //console.log(sportsession);
-
       response.render("sportDetail", {
         userName,
         sportDetail,
@@ -435,7 +384,6 @@ app.get(
     }
   }
 );
-
 app.get(
   "/sessionCreate/:id/:userId/:SportName",
   connectEnsureLogin.ensureLoggedIn(),
@@ -451,7 +399,6 @@ app.get(
     });
   }
 );
-
 app.post(
   "/sessionCreate/:id/:userId/:SportName",
   connectEnsureLogin.ensureLoggedIn(),
@@ -466,7 +413,6 @@ app.post(
     });
     console.log(sports);
     console.log(sports.SportName);
-    // let sport_name =
     try {
       const sportsession = await SportSession.addSession({
         date: request.body.date,
@@ -483,11 +429,9 @@ app.post(
       });
       response.cookie(`tp`, sportsession.TotalPlayer, {
         maxAge: 500 * 60 * 60 * 1000,
-        // expires works the same as the maxAge
         secure: true,
         httpOnly: true,
       });
-
       request.flash("success", "Session has been created successfully!");
       response.redirect("/sportDetail/" + sportId);
     } catch (err) {
@@ -495,12 +439,11 @@ app.post(
     }
   }
 );
-
 app.delete(
   "/sportDetail/:id/:userId",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
-    console.log("We have to delete a Sport with ID: ", request.params.id);
+    console.log("We have to delete Sport with ID: ", request.params.id);
     console.log(request.params.userId);
     try {
       await SportSession.remove(request.params.id, request.user.id);
@@ -511,23 +454,12 @@ app.delete(
     }
   }
 );
-
-/*app.get("/sportDetail/:id/joinSession", async function (request, response) {
-  const sportsession = await SportSession.getSessionDetail(request.params.id);
-  const sportDetail = await Sport.perticulerSport(request.params.id);
-  response.render("sportDetail", {
-    sportDetail,
-    sportsession,
-    csrfToken: request.csrfToken(),
-  });
-});*/
-
 app.get(
   "/sportDetail/:id/joinSession/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
     try {
-      console.log("We have to add player in session id : ", request.params.id);
+      console.log("Have to add player in session id : ", request.params.id);
       const sessionId = request.params.sid;
       const sportId = request.params.id;
       const userId = request.user.id;
@@ -549,18 +481,13 @@ app.get(
       const CountPlayers = splitPlayer.length;
       console.log(CountPlayers);
       const date = new Date().toISOString();
-
-      //console.log(TotalPlayer);
       if (splitPlayer.includes(me)) {
         request.flash("success", "You have already joined this session!");
       } else if (players.date < date) {
-        request.flash("error", "You can not join past Session");
+        request.flash("error", "You cannot join past Session");
       } else if (CountPlayers < TotalPlayer) {
-        // Add user to session
         splitPlayer.push(me);
         playerIdList.push(userId);
-        // const updatedPlayerId = Sequelize.literal(`array_append(playerId, ${userId})`);
-        // console.log(updatedPlayerId);
         console.log(playerIdList);
         await SportSession.update(
           {
@@ -570,14 +497,10 @@ app.get(
             where: { id: sessionId },
           }
         );
-
-        request.flash("success", "You have Success fully joined the session.");
+        request.flash("success", "You have Successfully joined session.");
       } else {
         request.flash("error", "Sorry, the session is full!");
       }
-
-      //const all = ListPlayer.join(",")
-      //console.log(splitPlayer);
       let arrToString = splitPlayer.toString();
       await SportSession.updatePlayer({
         player: arrToString,
@@ -588,52 +511,18 @@ app.get(
         request.params.id
       );
       response.redirect("/sportDetail/" + sportId);
-      //  console.log(findSession.SportSession[0].dataValues.player);
-
-      //console.log(findSession.player);
-
-      // try {
-      //   const players = await SportSession.findOne(request.params.id, {
-      //     where: {
-      //       player: request.body.player,
-      //       TotalPlayer: request.body.TotalPlayer,
-      //     },
-      //   });
-      //   const user = await User.findOne(request.params.id, {
-      //     where: {
-      //       firstName: request.cookies.fn,
-      //     },
-      //   });
-      //   console.log( request.cookies.fn);
-      //  // addMeToSessioin(myname,sessionid)
-      //   if (players && user) {
-      // console.log(players.player + "  " + players.TotalPlayer);
-      // const ListPlayer = players.player;
-      // const splitPlayer = ListPlayer.split(",");
-      // console.log(splitPlayer);
-      // const countPlayers = splitPlayer.count();
-      //     if (countPlayers < players.TotalPlayer) {
-      //       ListPlayer.push(user.firstName);
-      //     }
-      //   }
-      //   response.redirect("/sportDetail/" + sportId);
-      // } catch (error) {
-      //   console.log(error);
-      //   return response.status(422).json(error);
-      // }
     } catch (error) {
       console.log(error);
     }
   }
 );
-
 app.get(
   "/sportDetail/:id/leaveSession/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async function (request, response) {
     try {
       console.log(
-        "We have to remove a player in session id : ",
+        "We have to remove player in session id : ",
         request.params.id
       );
       const sessionId = request.params.sid;
@@ -651,30 +540,25 @@ app.get(
       const ListPlayer = players.player;
       const playerIdList = players.playerId;
       const indexPlayerId = playerIdList.indexOf(userId);
-
       console.log(playerIdList);
       const splitPlayer = ListPlayer.split(",");
       const CountPlayers = splitPlayer.length;
       console.log(CountPlayers);
       const indexOfme = splitPlayer.indexOf(me);
       console.log(indexPlayerId);
-
       if (splitPlayer.includes(me)) {
         splitPlayer.splice(indexOfme, 1);
         playerIdList.splice(indexPlayerId, 1);
-        request.flash("success", "You have Successfully leaved the session.");
+        request.flash("success", "You have Successfully left the session.");
       } else {
         request.flash("error", "Sorry, You are not in the session!");
       }
       console.log(playerIdList);
-      //const all = ListPlayer.join(",")
-      //console.log(splitPlayer);
       let arrToString = splitPlayer.toString();
       await SportSession.updatePlayer({
         player: arrToString,
         id: sessionId,
       });
-
       await SportSession.updatePlayerId({
         playerId: playerIdList,
         id: sessionId,
@@ -689,7 +573,6 @@ app.get(
     }
   }
 );
-
 app.get(
   "/viewReport",
   connectEnsureLogin.ensureLoggedIn(),
@@ -732,7 +615,6 @@ app.get(
     }
   }
 );
-
 app.get(
   "/playerJoinedSession/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -757,7 +639,6 @@ app.get(
     }
   }
 );
-
 app.get(
   "/cancelSession/:sportId/:sessionId",
   connectEnsureLogin.ensureLoggedIn(),
@@ -777,23 +658,12 @@ app.get(
         sessionId,
         csrfToken: request.csrfToken(),
       });
-      // await SportSession.update(
-      //   {
-      //     isCanceled: true,
-      //   },
-      //   {
-      //     where: {
-      //       id: sessionId,
-      //     },
-      //   }
-      // );
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);
     }
   }
 );
-
 app.post(
   "/cancelSession/:sportId/:sessionId",
   connectEnsureLogin.ensureLoggedIn(),
@@ -824,15 +694,6 @@ app.post(
           },
         }
       );
-      // await SportSession.update(
-      //   {
-      //   },
-      //   {
-      //     where: {
-      //       id: sessionId,
-      //     },
-      //   }
-      // );
       request.flash("success", "You have Success fully deleted the session.");
       response.redirect("/sportDetail/" + sportId);
     } catch (error) {
@@ -841,20 +702,6 @@ app.post(
     }
   }
 );
-
-// app.get("/playerjoinedSession/:id", async (request, response) => {
-//   try {
-//     const sportId = request.params.id;
-//     const userId = request.user.id;
-//     const sports = await Sport.findAll({ where: { userId } });
-//     const sessions = await SportSession.findAll();
-//     console.log(sessions);
-//     response.render("playerSessions", { sessions, sports });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// });
-
 app.get(
   "/resetPassword/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -870,7 +717,6 @@ app.get(
     });
   }
 );
-
 app.post(
   "/resetPassword/:id",
   connectEnsureLogin.ensureLoggedIn(),
@@ -888,7 +734,7 @@ app.post(
           },
         }
       );
-      request.flash("success", "Password reset done!");
+      request.flash("success", "Password has been reset!");
       response.redirect("/login");
     } catch (error) {
       console.log(error);
@@ -896,5 +742,4 @@ app.post(
     }
   }
 );
-
 module.exports = app;
