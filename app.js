@@ -86,7 +86,7 @@ function AdminOfSport(request, response, next) {
   if (adminEmail == actualAdminEmail && adminPassword == actualAdminPassword) {
     return next();
   } else {
-    response.redirect("/login");
+    response.redirect("/sportList");
     request.flash("error", "Please login with correct credentials.");
   }
 }
