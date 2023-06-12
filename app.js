@@ -212,7 +212,10 @@ app.post("/users", async (request, response) => {
     console.log(error);
   }
 });
-app.post("/session",validateUser,passport.authenticate("local", {
+app.post(
+  "/session",
+  validateUser,
+  passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
