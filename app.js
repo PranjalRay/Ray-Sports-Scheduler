@@ -20,6 +20,8 @@ const { request } = require("http");
 const { log } = require("util");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
+const request = require('request');
+require('dotenv').config();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -212,10 +214,28 @@ app.post("/users", async (request, response) => {
     console.log(error);
   }
 });
-app.post(
-  "/session",
-  validateUser,
-  passport.authenticate("local", {
+app.post("/session",(req, res, next) => {
+   const { email, password, 'g-recaptcha-response': recaptchaResponse } = req.body;
+  const options = {
+    url: 'https://www.google.com/recaptcha/api/siteverify',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    form: {
+      secret:process.env.RECAPTCHA_SECRET_KEY,
+      response: recaptchaResponse
+    }
+  };
+  request(options, (err, response, body) => {
+    if (err) {
+      return next(err);
+    }
+    const data = JSON.parse(body);
+    if (!data.success) {
+      return res.status(401).send('reCaptcha verification failed');
+    }
+  validateUser,passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
