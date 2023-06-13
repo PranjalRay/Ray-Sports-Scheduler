@@ -701,13 +701,14 @@ app.post(
         }
       );
       request.flash("success", "You have successfully canceled the session.");
-      response.redirect("/sportDetail/" + sportId);
+      return response.redirect("/sportDetail/" + sportId);
     } catch (error) {
       console.log(error);
       return response.status(422).json(error);
     }
   }
 );
+
 
 app.get("/cancelSession", (request, response) => {
   response.status(404).send("Not Found");
