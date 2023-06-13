@@ -2,6 +2,8 @@
 
 The Sports Scheduling App is a web application designed to manage and schedule sports sessions. It provides a user-friendly interface for users to create, join, and manage sports sessions, as well as view and edit session details. The app also includes authentication and authorization features to ensure secure access to the system.
  
+ ## VIDEO LINK ->  https://www.loom.com/share/dd01d187a9a640abbc6d47dd78649d73?sid=bb4d00c4-1498-4ea2-85b4-f7984583e1be
+ 
 ## ADMIN LOGIN ->   EMAIL: admin@admin.com  ||      PASSWORD: admin
 ## PRE-EXISTING PLAYER LOGIN ->   EMAIL: a@a.com  ||     PASSWORD: a
 
@@ -41,6 +43,27 @@ Node.js, Express.js, Sequelize, Passport.js, EJS, bcrypt, CSRF Protection, Flash
 6. Admin users can access additional features for managing sports and sessions.
 7. Log out of your account when you're done.
 
+## Images
+
 ## Starting Page
 ![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/IndexPage.png)
-
+## Player Page
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/PlayerPage.png)
+## Sign Up Page
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/SignUpPage.png)
+## Sign In Page
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/SignInPage.png)
+## Admin Dashboard
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/AdminSportsList.png)
+## Admin Report
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/Report.png)
+## Player Dashboard
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/PlayerSportsList.png)
+## Creating Sessions
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/CreatingSession.png)
+## Viewing Sessions
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/ViewingSessions.png)
+## Viewing Previous Joined Sessions
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/ViewingAlreadyJoinedSessions.png)
+## Reset Password
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/ResetPassword.png)
