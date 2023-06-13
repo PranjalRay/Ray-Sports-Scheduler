@@ -661,6 +661,7 @@ app.get(
     }
   }
 );
+
 app.post(
   "/cancelSession/:sportId/:sessionId",
   connectEnsureLogin.ensureLoggedIn(),
@@ -707,6 +708,11 @@ app.post(
     }
   }
 );
+
+app.get("/cancelSession", (request, response) => {
+  response.status(404).send("Not Found");
+});
+
 app.get(
   "/resetPassword/:id",
   connectEnsureLogin.ensureLoggedIn(),
