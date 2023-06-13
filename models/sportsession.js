@@ -1,3 +1,4 @@
+
 "use strict";
 const { Model, BOOLEAN } = require("sequelize");
 const { Sequelize } = require(".");
