@@ -546,7 +546,7 @@ app.get(
       if (splitPlayer.includes(me)) {
         splitPlayer.splice(indexOfme, 1);
         playerIdList.splice(indexPlayerId, 1);
-        request.flash("success", "You have Successfully lefy the session.");
+        request.flash("success", "You have Successfully left the session.");
       } else {
         request.flash("error", "Sorry, You are not in session!");
       }
