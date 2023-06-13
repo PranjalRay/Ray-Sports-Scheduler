@@ -668,22 +668,30 @@ app.post(
     try {
       const sportId = request.params.sportId;
       const sessionId = request.params.sessionId;
-      const sportCancel = await cancelSession.addReason({
-        reason: request.body.reason,
-        sessionId: sessionId,
-        sportId: sportId,
-      });
-      console.log(sportCancel.reason);
-      const findReason = await cancelSession.findOne({
+      const sportCancel = await cancelSession.findOne({
         where: {
-          sessionId,
+          sessionId: sessionId,
+          sportId: sportId,
         },
       });
-      console.log(findReason.reason);
+      if (!sportCancel) {
+        throw new Error("Session not found");
+      }
+      await cancelSession.update(
+        {
+          reason: request.body.reason,
+        },
+        {
+          where: {
+            sessionId: sessionId,
+            sportId: sportId,
+          },
+        }
+      );
       await SportSession.update(
         {
           isCanceled: true,
-          reason: findReason.reason,
+          reason: request.body.reason,
         },
         {
           where: {
@@ -691,7 +699,7 @@ app.post(
           },
         }
       );
-      request.flash("success", "You have Success fully deleted the session.");
+      request.flash("success", "You have successfully canceled the session.");
       response.redirect("/sportDetail/" + sportId);
     } catch (error) {
       console.log(error);
