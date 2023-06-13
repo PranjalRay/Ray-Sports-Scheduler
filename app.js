@@ -637,12 +637,12 @@ app.get(
   }
 );
 app.get(
-  "/cancelSession",
+  "/cancelSession/:id/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const sportId = request.params.sportId;
-      const sessionId = request.params.sessionId;
+      const sportId = request.params.sid;
+      const sessionId = request.params.sid;
       const sportCancel = await cancelSession.findOne({
         where: {
           sessionId: sessionId,
@@ -663,12 +663,12 @@ app.get(
 );
 
 app.post(
-  "/cancelSession",
+  "/cancelSession/:id/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const sportId = request.params.sportId;
-      const sessionId = request.params.sessionId;
+      const sportId = request.params.sid;
+      const sessionId = request.params.sid;
       const sportCancel = await cancelSession.findOne({
         where: {
           sessionId: sessionId,
