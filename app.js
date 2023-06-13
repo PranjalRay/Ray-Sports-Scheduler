@@ -667,7 +667,7 @@ app.post(
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
-      const sportId = request.params.sid;
+      const sportId = request.params.id;
       const sessionId = request.params.sid;
       const sportCancel = await cancelSession.findOne({
         where: {
