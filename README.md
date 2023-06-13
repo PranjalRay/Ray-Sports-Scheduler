@@ -40,3 +40,5 @@ Node.js, Express.js, Sequelize, Passport.js, EJS, bcrypt, CSRF Protection, Flash
 5. View and manage your sessions on the "Sport Detail" page.
 6. Admin users can access additional features for managing sports and sessions.
 7. Log out of your account when you're done.
+
+![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/image/Index Page.png?raw=true)
