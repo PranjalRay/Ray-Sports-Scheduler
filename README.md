@@ -8,6 +8,11 @@ The Sports Scheduling App is a web application designed to manage and schedule s
 ## ADMIN LOGIN ->   EMAIL: admin@admin.com  ||      PASSWORD: admin
 ## PRE-EXISTING PLAYER LOGIN ->   EMAIL: a@a.com  ||     PASSWORD: a
 
+## Difficulty and Interesting work
+
+- Report Creation
+- Leaving Sessions and displaying in Sessions Page
+
 ## Features
 
 - User Registration and Login
