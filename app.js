@@ -637,7 +637,7 @@ app.get(
   }
 );
 app.get(
-  "/cancelSession/:sportId/:sessionId",
+  "/cancelSession/:id/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
@@ -663,7 +663,7 @@ app.get(
 );
 
 app.post(
-  "/cancelSession/:sportId/:sessionId",
+  "/cancelSession/:id/:sid",
   connectEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     try {
