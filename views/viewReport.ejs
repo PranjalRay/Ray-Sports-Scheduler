@@ -31,14 +31,21 @@
     <div class="container">
         <h1>Available Sports <span><%= countSport %></span></h1>
         <% getSportByName.forEach(function(user) { %>
-        <p><%= user.SportName %>&nbsp;&nbsp;&nbsp;<span class="text-black">Sport Id: <%= user.id %></span></p>
+        <p>
+            <%= user.SportName %>&nbsp;&nbsp;&nbsp;
+            <span class="text-black">Sport Id: <%= user.id %></span>
+            <a href="/cancelSession?sportId=<%= user.id %>">Cancel Session</a>
+        </p>
         <% }) %><br>
     </div>
 
     <div class="container">
         <h1>Upcoming Sessions</h1>
         <% getAllSessionDetails.forEach(function(user) { %>
-        <p><span class="text-black">Sport Name: </span><%= user.SportName %></p>
+        <p>
+            <span class="text-black">Sport Name: </span><%= user.SportName %>
+            <a href="/cancelSession?sessionId=<%= user.id %>">Cancel Session</a>
+        </p>
         <p><span class="text-black">Session Id: </span><%= user.id %></p>
         <p><span class="text-black">Session Date: </span><%= user.date %></p>
         <p><span class="text-black">Session Time: </span><%= user.time %></p>
@@ -52,7 +59,10 @@
     <div class="container">
         <h1>Ongoing Sessions</h1>
         <% getAllTodaySessionDetails.forEach(function(user) { %>
-        <p><span class="text-black">Sport Name: </span><%= user.SportName %></p>
+        <p>
+            <span class="text-black">Sport Name: </span><%= user.SportName %>
+            <a href="/cancelSession?sessionId=<%= user.id %>">Cancel Session</a>
+        </p>
         <p><span class="text-black">Session Id: </span><%= user.id %></p>
         <p><span class="text-black">Session Date: </span><%= user.date %></p>
         <p><span class="text-black">Session Time: </span><%= user.time %></p>
