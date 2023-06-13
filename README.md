@@ -2,8 +2,8 @@
 
 The Sports Scheduling App is a web application designed to manage and schedule sports sessions. It provides a user-friendly interface for users to create, join, and manage sports sessions, as well as view and edit session details. The app also includes authentication and authorization features to ensure secure access to the system.
  
-## ADMIN LOGIN:   EMAIL: admin@admin.com  ||      PASSWORD: admin
-## PRE-EXISTING PLAYER LOGIN:   EMAIL: a@a.com  ||     PASSWORD: a
+## ADMIN LOGIN ->   EMAIL: admin@admin.com  ||      PASSWORD: admin
+## PRE-EXISTING PLAYER LOGIN ->   EMAIL: a@a.com  ||     PASSWORD: a
 
 ## Features
 
@@ -41,4 +41,6 @@ Node.js, Express.js, Sequelize, Passport.js, EJS, bcrypt, CSRF Protection, Flash
 6. Admin users can access additional features for managing sports and sessions.
 7. Log out of your account when you're done.
 
+## Starting Page
 ![alt text](https://github.com/PranjalRay/Ray-Sports-Scheduler/blob/main/images/IndexPage.png)
+
